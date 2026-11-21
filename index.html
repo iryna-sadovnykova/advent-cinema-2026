@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#175b43">
+<meta name="theme-color" content="#28560E">
 <title>Advent Cinema · 2026</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
-:root{color-scheme:light;--bg:#f7f5ed;--ink:#153b30;--muted:#687c70;--green:#175b43;--red:#b72f3b;--cream:#f7f5ed;--line:#d7dfd3}
+:root{color-scheme:light;--bg:#f7f5ed;--ink:#28560E;--muted:#53664B;--green:#28560E;--red:#CA020D;--cream:#f7f5ed;--line:#D9D4BC}
 *{box-sizing:border-box}
 body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:'DM Sans',Arial,sans-serif}
 button{font:inherit}
 .wrap{width:min(1080px,100%);margin:0 auto;padding:38px 28px 72px}
 .topline{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-bottom:22px;border-bottom:1px solid var(--line)}
 .brand{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;letter-spacing:.11em;text-transform:uppercase}
-.brand-mark{display:inline-flex;width:28px;height:28px;align-items:center;justify-content:center;background:var(--red);color:white;border-radius:6px;font-size:18px}
+.brand-mark{display:inline-flex;width:28px;height:28px;align-items:center;justify-content:center;background:#C09207;color:#17240C;border-radius:6px;font-size:18px}
 .edition{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.12em}
 header{padding:65px 0 36px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end}
 .kicker{text-transform:uppercase;letter-spacing:.18em;font-weight:700;color:var(--red);font-size:12px;margin:0 0 15px}
@@ -32,10 +32,10 @@ h1{font-size:clamp(48px,7.2vw,86px);font-weight:700;letter-spacing:-.065em;line-
 .grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:10px}
 .door{position:relative;aspect-ratio:1/1.13;border:0;border-radius:8px;background:var(--red);color:white;padding:13px;display:flex;align-items:flex-start;justify-content:space-between;flex-direction:column;text-align:left;cursor:pointer;transition:background .16s ease,transform .16s ease;overflow:hidden}
 .door:nth-child(4n+2),.door:nth-child(7n+5){background:var(--green)}
-.door:nth-child(9n){background:#d8e2d2;color:var(--ink)}
+.door:nth-child(9n){background:#C09207;color:#17240C}
 .door:hover{transform:translateY(-2px)}
-.door:focus-visible{outline:3px solid #d79a3b;outline-offset:3px}
-.door.locked{cursor:not-allowed;background:#e5e8df!important;color:#8a988c!important}
+.door:focus-visible{outline:3px solid #C09207;outline-offset:3px}
+.door.locked{cursor:not-allowed;background:#E8E5D8!important;color:#8a988c!important}
 .door.locked:hover{transform:none}
 .door.opened{background:var(--green)!important;color:white!important}
 .door-number{font-size:clamp(24px,3vw,39px);font-weight:700;letter-spacing:-.07em;line-height:1}
@@ -45,13 +45,13 @@ h1{font-size:clamp(48px,7.2vw,86px);font-weight:700;letter-spacing:-.065em;line-
 .door.special{grid-column:span 2;aspect-ratio:auto;min-height:120px}
 .door.special .door-number{font-size:clamp(27px,3.2vw,42px)}
 .footer{border-top:1px solid var(--line);padding-top:22px;margin-top:32px;color:var(--muted);font-size:12px;line-height:1.6;display:flex;justify-content:space-between;gap:15px}
-.footer .star{color:var(--red)}
-.modal{position:fixed;inset:0;background:#081e19bd;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}
+.footer .star{color:#C09207}
+.modal{position:fixed;inset:0;background:#102509bd;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}
 .modal.show{display:flex}
 .panel{position:relative;background:var(--bg);color:var(--ink);width:min(690px,100%);max-height:92vh;overflow:auto;display:grid;grid-template-columns:minmax(180px,40%) 1fr;border-radius:10px}
-.poster{position:relative;aspect-ratio:2/3;background:#e4e6dd;display:flex;align-items:center;justify-content:center;padding:20px;text-align:center;align-self:start;overflow:hidden}
+.poster{position:relative;aspect-ratio:2/3;background:#E8E5D8;display:flex;align-items:center;justify-content:center;padding:20px;text-align:center;align-self:start;overflow:hidden}
 .poster-label{font-size:clamp(19px,2.8vw,29px);font-weight:700;line-height:1.15;letter-spacing:-.04em;color:var(--green)}
-.poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#e4e6dd}
+.poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#E8E5D8}
 .poster.loading .poster-label:after{content:' …'}
 .details{padding:57px 30px 30px}
 .day{font-size:11px;color:var(--red);font-weight:700;text-transform:uppercase;letter-spacing:.13em}
