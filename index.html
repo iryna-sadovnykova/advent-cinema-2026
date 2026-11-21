@@ -16,7 +16,7 @@ button{font:inherit}
 .brand{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;letter-spacing:.11em;text-transform:uppercase}
 .brand-mark{display:inline-flex;width:28px;height:28px;align-items:center;justify-content:center;background:#C09207;color:#17240C;border-radius:6px;font-size:18px}
 .edition{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.12em}
-header{padding:65px 0 36px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end}
+header{padding:65px 0 22px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end}
 .kicker{text-transform:uppercase;letter-spacing:.18em;font-weight:700;color:var(--red);font-size:12px;margin:0 0 15px}
 h1{font-size:clamp(48px,7.2vw,86px);font-weight:700;letter-spacing:-.065em;line-height:.98;margin:0}
 .sub{color:var(--muted);font-size:15px;line-height:1.5;margin:17px 0 0}
@@ -25,12 +25,12 @@ h1{font-size:clamp(48px,7.2vw,86px);font-weight:700;letter-spacing:-.065em;line-
 .toolbar button{border:1px solid var(--green);color:var(--green);background:transparent;border-radius:6px;padding:11px 15px;font-size:12px;font-weight:700;cursor:pointer;transition:background .15s,color .15s}
 .toolbar button:hover,.toolbar button[aria-pressed="true"]{background:var(--green);color:white}
 .grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:10px}
-.door{position:relative;aspect-ratio:1/1.13;border:0;border-radius:8px;background:var(--door-color,var(--red));color:var(--door-ink,white);padding:13px;display:flex;align-items:flex-start;justify-content:space-between;flex-direction:column;text-align:left;cursor:pointer;transition:background .16s ease,transform .16s ease;overflow:hidden}
+.door{position:relative;aspect-ratio:1/1.13;border:0;border-radius:8px;background:var(--door-color,var(--red));color:#FFFFFF;padding:13px;display:flex;align-items:flex-start;justify-content:space-between;flex-direction:column;text-align:left;cursor:pointer;transition:background .16s ease,transform .16s ease;overflow:hidden}
 .door:hover{transform:translateY(-2px)}
 .door:focus-visible{outline:3px solid #C09207;outline-offset:3px}
-.door.locked{cursor:not-allowed;background:#E8E5D8!important;color:#8a988c!important}
+.door.locked{cursor:not-allowed;background:var(--door-color)!important;color:#FFFFFF!important;opacity:.6}
 .door.locked:hover{transform:none}
-.door.past{background:#D5D5D5!important;color:#4A4A4A!important}
+.door.past{background:#8B8B8B!important;color:#FFFFFF!important}
 .door-number{font-size:clamp(24px,3vw,39px);font-weight:700;letter-spacing:-.07em;line-height:1}
 .door-status{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;opacity:.83}
 .door.opened .door-status{opacity:1}
@@ -54,7 +54,7 @@ h1{font-size:clamp(48px,7.2vw,86px);font-weight:700;letter-spacing:-.065em;line-
 .hint{margin-top:28px;font-size:12px;line-height:1.6;color:var(--muted)}
 .close{position:absolute;top:12px;right:12px;z-index:5;border:1px solid var(--line);background:var(--bg);color:var(--ink);width:36px;height:36px;border-radius:6px;font-size:24px;line-height:1;cursor:pointer}
 @media(max-width:850px){.grid{grid-template-columns:repeat(6,minmax(0,1fr))}header{padding-top:50px}}
-@media(max-width:620px){.wrap{padding:22px 16px 44px}.topline{padding-bottom:16px}header{display:block;padding:44px 0 25px}.toolbar{margin-top:28px;flex-direction:row;align-items:center;justify-content:space-between;gap:12px}.grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.door{padding:10px}.door-number{font-size:28px}.door-symbol{top:9px;right:9px;font-size:13px}.door-status{font-size:8px}.footer{display:block}.panel{grid-template-columns:1fr}.poster{width:min(100%,250px);margin:0 auto}.details{padding:20px 24px 30px}.details p{margin-top:19px}}
+@media(max-width:620px){.wrap{padding:22px 16px 44px}.topline{padding-bottom:16px}header{display:block;padding:44px 0 20px}.toolbar{margin-top:28px;flex-direction:row;align-items:center;justify-content:space-between;gap:12px}.grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.door{padding:10px}.door-number{font-size:28px}.door-symbol{top:9px;right:9px;font-size:13px}.door-status{font-size:8px}.footer{display:block}.panel{grid-template-columns:1fr}.poster{width:min(100%,250px);margin:0 auto}.details{padding:20px 24px 30px}.details p{margin-top:19px}}
 @media(max-width:360px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(prefers-reduced-motion:reduce){.door,.toolbar button{transition:none}.door:hover{transform:none}}
 </style>
@@ -130,7 +130,6 @@ function render(){
   const b=document.createElement('button');
   b.className='door'+(unlocked(i)?'':' locked')+(passed(i)?' opened':'')+(isPast(i)?' past':'')+(i===31?' special':'');
   b.style.setProperty('--door-color',doorPalette[doorOrder[i]]);
-  b.style.setProperty('--door-ink',doorOrder[i]===2?'#1D240D':'#FFFFFF');
   b.setAttribute('aria-label',(i===31?'January 1':`December ${i+1}`)+(unlocked(i)?`, ${title}`:', locked'));
   b.innerHTML=`<span class="door-number">${i===31?'01':String(i+1).padStart(2,'0')}</span><span class="door-symbol" aria-hidden="true">${isPast(i)?'✓':'↗'}</span><span class="door-status">${isPast(i)?'Past':passed(i)?'Today':unlocked(i)?'Preview':'December '+(i+1)}</span>`;
   b.onclick=()=>{if(!unlocked(i)){alert('This door opens on '+(i===31?'January 1, 2027':`December ${i+1}, 2026`)+' in Kyiv.');return}show(i)};
