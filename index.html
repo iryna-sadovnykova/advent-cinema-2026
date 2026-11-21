@@ -24,20 +24,13 @@ h1{font-size:clamp(48px,7.2vw,86px);font-weight:700;letter-spacing:-.065em;line-
 .count{color:var(--muted);font-size:13px}
 .toolbar button{border:1px solid var(--green);color:var(--green);background:transparent;border-radius:6px;padding:11px 15px;font-size:12px;font-weight:700;cursor:pointer;transition:background .15s,color .15s}
 .toolbar button:hover,.toolbar button[aria-pressed="true"]{background:var(--green);color:white}
-.key{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);padding:15px 0 21px;border-top:1px solid var(--line)}
-.key span{display:inline-flex;align-items:center;gap:7px}
-.swatch{width:11px;height:11px;border-radius:3px;display:inline-block;background:var(--red)}
-.swatch.green{background:var(--green)}
-.swatch.light{background:#e7e8df;border:1px solid #ced8cb}
 .grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:10px}
-.door{position:relative;aspect-ratio:1/1.13;border:0;border-radius:8px;background:var(--red);color:white;padding:13px;display:flex;align-items:flex-start;justify-content:space-between;flex-direction:column;text-align:left;cursor:pointer;transition:background .16s ease,transform .16s ease;overflow:hidden}
-.door:nth-child(4n+2),.door:nth-child(7n+5){background:var(--green)}
-.door:nth-child(9n){background:#C09207;color:#17240C}
+.door{position:relative;aspect-ratio:1/1.13;border:0;border-radius:8px;background:var(--door-color,var(--red));color:var(--door-ink,white);padding:13px;display:flex;align-items:flex-start;justify-content:space-between;flex-direction:column;text-align:left;cursor:pointer;transition:background .16s ease,transform .16s ease;overflow:hidden}
 .door:hover{transform:translateY(-2px)}
 .door:focus-visible{outline:3px solid #C09207;outline-offset:3px}
 .door.locked{cursor:not-allowed;background:#E8E5D8!important;color:#8a988c!important}
 .door.locked:hover{transform:none}
-.door.opened{background:var(--green)!important;color:white!important}
+.door.past{background:#D5D5D5!important;color:#4A4A4A!important}
 .door-number{font-size:clamp(24px,3vw,39px);font-weight:700;letter-spacing:-.07em;line-height:1}
 .door-status{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;opacity:.83}
 .door.opened .door-status{opacity:1}
@@ -70,10 +63,9 @@ h1{font-size:clamp(48px,7.2vw,86px);font-weight:700;letter-spacing:-.065em;line-
 <main class="wrap">
 <div class="topline"><div class="brand"><span class="brand-mark" aria-hidden="true">✳</span> Advent Cinema</div><div class="edition">2026 / 2027</div></div>
 <header><div><p class="kicker">The holiday film calendar</p><h1>32 days.<br>32 films.</h1><p class="sub">A new movie every day, December 1 — January 1.</p></div>
-<div class="toolbar"><span class="count" id="progress"></span><button type="button" id="demo" aria-pressed="false">Preview all doors: off</button></div></header>
-<div class="key" aria-label="Calendar legend"><span><i class="swatch green"></i> Open</span><span><i class="swatch"></i> Upcoming</span><span><i class="swatch light"></i> Locked until date</span></div>
+<div class="toolbar"><span class="count" id="progress"></span><button type="button" id="demo" aria-pressed="true">Preview all doors: on</button></div></header>
 <section class="grid" id="calendar" aria-label="Movie advent calendar"></section>
-<footer class="footer"><span>Doors open automatically at midnight, Kyiv time.</span><span class="star">✳ Christmas, one film at a time.</span></footer>
+<footer class="footer"><span>All doors are previewable; past dates turn gray automatically (Kyiv time).</span><span class="star">✳ Christmas, one film at a time.</span></footer>
 </main>
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="movie-title">
 <div class="panel">
@@ -113,7 +105,16 @@ async function loadPosterIndex(){
 }
 async function posterUrl(i){if(posterCache[i])return posterCache[i];await loadPosterIndex();return posterCache[i]||null}
 async function warmPosters(){await loadPosterIndex();for(const i of Object.keys(posterCache).slice(0,5)){const img=new Image();img.src=posterCache[i]}}
-let preview=false,posterRequest=0;
+// Stable, balanced shuffle: colors feel random but do not change on reload.
+const doorPalette=['#CA020D','#28560E','#C09207'];
+const doorOrder=Array.from({length:titles.length},(_,i)=>i%doorPalette.length);
+let colorSeed=20261201;
+for(let i=doorOrder.length-1;i>0;i--){
+ colorSeed=(Math.imul(colorSeed,1664525)+1013904223)>>>0;
+ const j=colorSeed%(i+1);
+ [doorOrder[i],doorOrder[j]]=[doorOrder[j],doorOrder[i]];
+}
+let preview=true,posterRequest=0;
 function dateFor(i){return i===31?'2027-01-01':`2026-12-${String(i+1).padStart(2,'0')}`}
 function kyivToday(){
  const parts=new Intl.DateTimeFormat('en-US',{timeZone:'Europe/Kyiv',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
@@ -121,14 +122,17 @@ function kyivToday(){
  return `${get('year')}-${get('month')}-${get('day')}`;
 }
 function passed(i){return kyivToday()>=dateFor(i)}
+function isPast(i){return kyivToday()>dateFor(i)}
 function unlocked(i){return preview||passed(i)}
 function render(){
  const grid=$('calendar');grid.innerHTML='';
  titles.forEach(([title,year],i)=>{
   const b=document.createElement('button');
-  b.className='door'+(unlocked(i)?'':' locked')+(passed(i)?' opened':'')+(i===31?' special':'');
+  b.className='door'+(unlocked(i)?'':' locked')+(passed(i)?' opened':'')+(isPast(i)?' past':'')+(i===31?' special':'');
+  b.style.setProperty('--door-color',doorPalette[doorOrder[i]]);
+  b.style.setProperty('--door-ink',doorOrder[i]===2?'#1D240D':'#FFFFFF');
   b.setAttribute('aria-label',(i===31?'January 1':`December ${i+1}`)+(unlocked(i)?`, ${title}`:', locked'));
-  b.innerHTML=`<span class="door-number">${i===31?'01':String(i+1).padStart(2,'0')}</span><span class="door-symbol" aria-hidden="true">${passed(i)?'↗':unlocked(i)?'↗':'+'}</span><span class="door-status">${passed(i)?'Open':unlocked(i)?'Preview':'December '+(i+1)}</span>`;
+  b.innerHTML=`<span class="door-number">${i===31?'01':String(i+1).padStart(2,'0')}</span><span class="door-symbol" aria-hidden="true">${isPast(i)?'✓':'↗'}</span><span class="door-status">${isPast(i)?'Past':passed(i)?'Today':unlocked(i)?'Preview':'December '+(i+1)}</span>`;
   b.onclick=()=>{if(!unlocked(i)){alert('This door opens on '+(i===31?'January 1, 2027':`December ${i+1}, 2026`)+' in Kyiv.');return}show(i)};
   grid.appendChild(b);
  });
