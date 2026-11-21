@@ -3,146 +3,89 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#122734">
+<meta name="theme-color" content="#175b43">
 <title>Advent Cinema · 2026</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap');
-:root{color-scheme:dark;--gold:#f2d59c;--cream:#fff3dc}
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+:root{color-scheme:light;--bg:#f7f5ed;--ink:#153b30;--muted:#687c70;--green:#175b43;--red:#b72f3b;--cream:#f7f5ed;--line:#d7dfd3}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -15%,#334b57 0,#152a38 48%,#091721 100%);color:var(--cream);font-family:'DM Sans',sans-serif}
-.wrap{max-width:1140px;margin:auto;padding:54px 22px 70px}
-header{text-align:center;margin-bottom:34px}
-.eyebrow{text-transform:uppercase;letter-spacing:.36em;color:#e9c98e;font-size:12px}
-h1{font:700 clamp(40px,7vw,76px)/1.08 'Playfair Display',serif;margin:12px 0 10px;text-shadow:0 4px 30px #0008}
-.sub{color:#d4c6b4;font-size:15px}
-.toolbar{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;margin-top:20px}
-.toolbar button{border:1px solid #d9b97977;background:#ffffff0a;color:var(--cream);border-radius:999px;padding:10px 16px;cursor:pointer}
-.toolbar button:hover{background:#ffffff20}
-.count{font-size:13px;color:#c6b99e}
-.grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:15px}
-.door{position:relative;aspect-ratio:3/4.1;cursor:pointer;border:0;padding:0;background:transparent;color:inherit;text-align:center}
-.door:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
-.frame{position:absolute;inset:0;border:2px solid #d6b67c99;border-radius:11px;background:linear-gradient(145deg,#8e3447,#4c1d31);box-shadow:0 8px 16px #0006,inset 0 0 0 5px #3e1c2a,inset 0 0 0 7px #c49b63a8;overflow:hidden}
-.frame:after{content:'';position:absolute;inset:14px;border:1px solid #f1d59d55;border-radius:5px;pointer-events:none}
-.door:nth-child(3n+2) .frame{background:linear-gradient(145deg,#275c62,#14343e)}
-.door:nth-child(4n) .frame{background:linear-gradient(145deg,#79512c,#3c2929)}
-.door:nth-child(7n) .frame{background:linear-gradient(145deg,#425a82,#242a4e)}
-.number{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:700 clamp(25px,4vw,49px) 'Playfair Display',serif;color:#f9dfaa;text-shadow:0 2px 3px #0009}
-.ornament{position:absolute;top:12%;left:0;right:0;color:#eed29a88;font-size:20px}
-.knob{position:absolute;right:10%;top:49%;width:7px;height:7px;background:#e8ca8d;border-radius:50%;box-shadow:0 0 0 2px #4a2d31}
-.door:hover .frame{filter:brightness(1.17);transform:translateY(-3px)}
-.door.locked{cursor:not-allowed;filter:saturate(.55)}
-.door.opened .frame{background:linear-gradient(145deg,#284c45,#122f34);border-color:#b8caa2}
-.door.opened .number{opacity:.6}
-.door.opened:before{content:'✓';position:absolute;z-index:2;bottom:12px;left:0;right:0;color:#f5d9a4}
-.special{grid-column:span 2;aspect-ratio:auto;min-height:160px}
-.special .number{font-size:35px}
-.modal{position:fixed;inset:0;background:#030a10dd;display:none;align-items:center;justify-content:center;padding:22px;z-index:5;backdrop-filter:blur(8px)}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:'DM Sans',Arial,sans-serif}
+button{font:inherit}
+.wrap{width:min(1080px,100%);margin:0 auto;padding:38px 28px 72px}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;letter-spacing:.11em;text-transform:uppercase}
+.brand-mark{display:inline-flex;width:28px;height:28px;align-items:center;justify-content:center;background:var(--red);color:white;border-radius:6px;font-size:18px}
+.edition{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.12em}
+header{padding:65px 0 36px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end}
+.kicker{text-transform:uppercase;letter-spacing:.18em;font-weight:700;color:var(--red);font-size:12px;margin:0 0 15px}
+h1{font-size:clamp(48px,7.2vw,86px);font-weight:700;letter-spacing:-.065em;line-height:.98;margin:0}
+.sub{color:var(--muted);font-size:15px;line-height:1.5;margin:17px 0 0}
+.toolbar{display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+.count{color:var(--muted);font-size:13px}
+.toolbar button{border:1px solid var(--green);color:var(--green);background:transparent;border-radius:6px;padding:11px 15px;font-size:12px;font-weight:700;cursor:pointer;transition:background .15s,color .15s}
+.toolbar button:hover,.toolbar button[aria-pressed="true"]{background:var(--green);color:white}
+.key{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);padding:15px 0 21px;border-top:1px solid var(--line)}
+.key span{display:inline-flex;align-items:center;gap:7px}
+.swatch{width:11px;height:11px;border-radius:3px;display:inline-block;background:var(--red)}
+.swatch.green{background:var(--green)}
+.swatch.light{background:#e7e8df;border:1px solid #ced8cb}
+.grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:10px}
+.door{position:relative;aspect-ratio:1/1.13;border:0;border-radius:8px;background:var(--red);color:white;padding:13px;display:flex;align-items:flex-start;justify-content:space-between;flex-direction:column;text-align:left;cursor:pointer;transition:background .16s ease,transform .16s ease;overflow:hidden}
+.door:nth-child(4n+2),.door:nth-child(7n+5){background:var(--green)}
+.door:nth-child(9n){background:#d8e2d2;color:var(--ink)}
+.door:hover{transform:translateY(-2px)}
+.door:focus-visible{outline:3px solid #d79a3b;outline-offset:3px}
+.door.locked{cursor:not-allowed;background:#e5e8df!important;color:#8a988c!important}
+.door.locked:hover{transform:none}
+.door.opened{background:var(--green)!important;color:white!important}
+.door-number{font-size:clamp(24px,3vw,39px);font-weight:700;letter-spacing:-.07em;line-height:1}
+.door-status{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;opacity:.83}
+.door.opened .door-status{opacity:1}
+.door-symbol{position:absolute;right:12px;top:12px;font-size:17px;font-weight:500;line-height:1}
+.door.special{grid-column:span 2;aspect-ratio:auto;min-height:120px}
+.door.special .door-number{font-size:clamp(27px,3.2vw,42px)}
+.footer{border-top:1px solid var(--line);padding-top:22px;margin-top:32px;color:var(--muted);font-size:12px;line-height:1.6;display:flex;justify-content:space-between;gap:15px}
+.footer .star{color:var(--red)}
+.modal{position:fixed;inset:0;background:#081e19bd;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}
 .modal.show{display:flex}
-.panel{width:min(720px,100%);max-height:92vh;overflow:auto;background:#132a37;border:1px solid #d6b67c77;border-radius:18px;box-shadow:0 20px 90px #000a;display:grid;grid-template-columns:minmax(170px,40%) 1fr;position:relative}
-.poster{aspect-ratio:2/3;min-height:0;width:100%;background:radial-gradient(circle at 50% 25%,#a86d54,#452938 58%,#152e3b);display:flex;align-items:center;justify-content:center;padding:22px;text-align:center;position:relative;overflow:hidden;align-self:start}
-.poster:before{content:'✧';font-size:180px;position:absolute;color:#f4d3a322;top:-40px}
-.poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;z-index:2}
-.poster:has(img){padding:0;background:#0c1923}
-.poster:has(img):before{display:none}
-.poster-label{position:relative;z-index:1;font:700 clamp(25px,3vw,39px)/1.2 'Playfair Display',serif;text-shadow:0 4px 15px #000}
-.poster.loading .poster-label:after{content:'  ···';font-size:18px}
-.details{padding:40px 28px 30px}
-.day{color:#e7c58d;letter-spacing:.16em;text-transform:uppercase;font-size:12px}
-.details h2{font:700 35px/1.15 'Playfair Display',serif;margin:17px 0}
-.year{color:#c5b7a8}
-.details p{line-height:1.6}
-.close{position:absolute;right:12px;top:10px;border:0;background:#ffffff20;color:white;font-size:25px;border-radius:50%;width:38px;height:38px;cursor:pointer;z-index:3}
-.hint{font-size:12px;color:#b7a99b;margin-top:20px}
-.footer{text-align:center;margin:30px auto 0;color:#c6b99e;font-size:12px}
-.snow{position:fixed;inset:0;pointer-events:none;opacity:.25;background-image:radial-gradient(2px 2px at 20px 30px,white 99%,transparent),radial-gradient(2px 2px at 90px 110px,white 99%,transparent),radial-gradient(1px 1px at 160px 80px,white 99%,transparent);background-size:210px 180px}
-@media(max-width:800px){.grid{grid-template-columns:repeat(4,1fr);gap:10px}}
-@media(max-width:500px){.grid{grid-template-columns:repeat(3,1fr);gap:9px}.wrap{padding:44px 14px}.panel{grid-template-columns:1fr}.poster{width:min(100%,300px);margin:auto}.details{padding:22px}.details h2{font-size:28px}.special{min-height:130px}}
-
-/* Storybook Christmas house: original illustrated facade and playful numbered doors. */
-:root{--cream:#fff4de;--pine:#225c55;--berry:#c64c61}
-body{background:radial-gradient(circle at 83% 8%,#465777 0,#1b3250 27%,#101e39 57%,#0b1a30 100%)}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(circle,#ffefcb 1.3px,transparent 2px),radial-gradient(circle,#ffffffaa 1px,transparent 1.6px);background-size:91px 93px,163px 149px;background-position:10px 14px,51px 73px;opacity:.7}
-.snow{opacity:.1}
-.wrap{max-width:1110px;padding-top:32px}
-header{position:relative;z-index:2;margin-bottom:38px}
-.eyebrow{font-weight:700;letter-spacing:.4em}
-h1{color:#fff6e6;text-shadow:3px 5px 0 #5c3c56,0 9px 35px #0009}
-.sub{color:#f4d9c8}
-.story-scene{position:relative;margin:125px auto 15px;max-width:990px;filter:drop-shadow(0 20px 26px #060b20a0)}
-.house{position:relative;background:#e8a5ac;border:11px solid #f7d4ca;border-bottom:17px solid #aa6c78;border-radius:10px 10px 3px 3px;padding:46px 34px 38px;box-shadow:inset 0 0 0 8px #be6976,0 8px 0 #704756,0 20px 0 #f1ecdf,0 29px 0 #cbdde3}
-.house:before{content:"";position:absolute;inset:15px;pointer-events:none;opacity:.19;background-image:repeating-linear-gradient(to bottom,transparent 0 33px,#7c414e 34px 36px),repeating-linear-gradient(to right,#7c414e 0 1px,transparent 2px 76px)}
-.roof{position:absolute;left:-6%;right:-6%;top:-150px;height:170px;pointer-events:none;z-index:2}
-.roof .roof-base{position:absolute;left:0;right:0;bottom:1px;height:47px;background:#4b7774;border:8px solid #244d54;clip-path:polygon(0 43%,13% 0,87% 0,100% 43%,100% 100%,0 100%);box-shadow:0 12px 0 #2a454e}
-.roof .peak{position:absolute;left:16%;width:68%;top:0;height:171px;background:#4e7771;clip-path:polygon(50% 0,100% 100%,0 100%)}
-.roof .peak:before{content:"";position:absolute;inset:15px 18px 0;background:#e8a5ac;clip-path:polygon(50% 0,100% 100%,0 100%)}
-.roof .snowcap{position:absolute;left:10%;right:10%;bottom:32px;height:18px;background:#fff9f1;border-radius:35% 65% 30% 30%;filter:drop-shadow(0 5px 0 #dce7ef)}
-.roof .star-window{position:absolute;left:calc(50% - 28px);top:77px;width:56px;height:56px;border:8px solid #28595c;border-radius:50%;background:#ffc87e;box-shadow:0 0 0 5px #ffebc7,0 0 25px #ffe39b}
-.roof .star-window:before,.roof .star-window:after{content:"";position:absolute;background:#28595c}
-.roof .star-window:before{width:6px;top:0;bottom:0;left:calc(50% - 3px)}
-.roof .star-window:after{height:6px;left:0;right:0;top:calc(50% - 3px)}
-.roof .chimney{position:absolute;top:11px;left:22%;width:48px;height:62px;background:repeating-linear-gradient(0deg,#99535e 0 12px,#f0bdac 13px 16px);border:5px solid #754953}
-.roof .chimney:after{content:"";position:absolute;top:-12px;left:-9px;width:56px;height:15px;border-radius:8px;background:white}
-.roof .garland{position:absolute;bottom:3px;left:8%;right:8%;text-align:center;font-size:20px;letter-spacing:9px;color:#d44356;text-shadow:0 3px #174e43}
-.house-title{position:absolute;top:13px;left:0;right:0;text-align:center;color:#703c4d;font:700 17px 'Playfair Display',serif;letter-spacing:.24em;text-transform:uppercase}
-.house .grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:23px 18px}
-.house .door{aspect-ratio:4/5;transition:transform .2s ease;perspective:500px}
-.house .door:hover{transform:translateY(-5px) rotate(-1deg)}
-.house .door:focus-visible{outline:4px solid #f2b84f;outline-offset:5px}
-.house .frame{border:0;border-radius:45% 45% 5px 5px / 21% 21% 5px 5px;background:var(--door,#376b68)!important;box-shadow:inset 0 0 0 4px #fff8dc99,inset 0 0 0 9px #163e4377,3px 7px 0 #723f515e,0 0 0 6px #fce4c8;overflow:hidden;transition:filter .2s,transform .2s}
-.house .frame:after{inset:12px 10px 9px;border:2px solid #fce4c877;border-radius:44% 44% 3px 3px / 20% 20% 3px 3px}
-.house .door:nth-child(5n+1) .frame{border-radius:4px}
-.house .door:nth-child(7n+2) .frame{border-radius:5px 5px 43% 43% / 5px 5px 15% 15%}
-.house .door:nth-child(4n+3) .frame{border-radius:45% 45% 5px 5px / 33% 33% 5px 5px}
-.house .number{font-size:clamp(22px,3.6vw,44px);z-index:2;text-shadow:2px 3px 0 #493747}
-.house .ornament{top:7%;z-index:2;font-size:17px}
-.house .knob{top:57%;right:9%;width:8px;height:8px;background:#f9d77e}
-.house .mini-art{position:absolute;bottom:9%;left:9%;right:9%;z-index:2;height:24%;display:flex;align-items:center;justify-content:center;font-size:clamp(16px,2.8vw,29px);filter:drop-shadow(0 3px 1px #14343b60)}
-.house .lattice{position:absolute;inset:18% 16% 18%;border:2px solid #ffedc188;border-radius:50% 50% 3px 3px/30% 30% 3px 3px;opacity:.7}
-.house .door:nth-child(3n) .lattice{background:linear-gradient(90deg,transparent 47%,#fbe7c8ab 49%,#fbe7c8ab 51%,transparent 53%),linear-gradient(transparent 49%,#fbe7c8ab 50%,transparent 52%)}
-.house .door:nth-child(5n) .lattice{background:repeating-linear-gradient(45deg,transparent 0 18px,#ffebc16b 19px 20px,transparent 21px 38px)}
-.house .door:nth-child(4n) .lattice{border-radius:4px}
-.house .door.opened .frame{background:linear-gradient(145deg,#f5cd8d,#e99980)!important;box-shadow:inset 0 0 0 4px #fff1ca,inset 0 0 0 9px #ba657b,3px 7px 0 #713e505e,0 0 0 6px #fce4c8}
-.house .door.opened .number{opacity:1;color:#643e57}
-.house .door.opened:before{content:"✦";z-index:4;bottom:7px;color:#a44864}
-.house .special{grid-column:span 2;aspect-ratio:unset;min-height:175px}
-.house .special .frame{border-radius:48% 48% 5px 5px / 35% 35% 5px 5px!important}
-.house .special .number{font-size:30px}
-.house .special .mini-art{font-size:36px}
-.house .door.locked{filter:none}
-.house .door.locked .frame{filter:saturate(.75) brightness(.86)}
-.house .door.locked .number{color:#fff0d7}
-.snowbank{position:absolute;left:-6%;right:-6%;bottom:-56px;height:60px;border-radius:60% 50% 0 0;background:#faf7ed;z-index:-1}
-.ground-decor{position:absolute;left:0;right:0;bottom:-28px;display:flex;justify-content:space-around;pointer-events:none;z-index:4;font-size:42px;filter:drop-shadow(0 3px 1px #57737a)}
-.moon{position:fixed;right:5%;top:4%;font-size:58px;color:#f7db9d;opacity:.7;pointer-events:none}
-@media(max-width:800px){.house{padding:36px 18px 28px}.house .grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:17px 13px}.story-scene{margin-top:115px}.house-title{font-size:12px;letter-spacing:.12em}.roof{top:-130px;height:149px}.roof .peak{height:148px}}
-@media(max-width:500px){.story-scene{margin:105px auto 30px}.house{border-width:7px;padding:38px 11px 20px}.house .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:15px 11px}.house .door{aspect-ratio:3.5/5}.house .frame{box-shadow:inset 0 0 0 3px #fff8dc99,inset 0 0 0 6px #163e4377,2px 5px 0 #723f515e,0 0 0 3px #fce4c8}.house .frame:after{inset:10px 7px 7px}.house .number{font-size:27px}.house .mini-art{font-size:18px}.house .special{min-height:120px}.roof{top:-108px;height:122px}.roof .peak{height:123px}.roof .star-window{width:36px;height:36px;left:calc(50% - 18px);top:60px;border-width:5px}.roof .chimney{transform:scale(.7);transform-origin:top}.roof .garland{font-size:11px;letter-spacing:4px}.ground-decor{font-size:27px;bottom:-21px}.house-title{font-size:10px;top:12px}}
-
+.panel{position:relative;background:var(--bg);color:var(--ink);width:min(690px,100%);max-height:92vh;overflow:auto;display:grid;grid-template-columns:minmax(180px,40%) 1fr;border-radius:10px}
+.poster{position:relative;aspect-ratio:2/3;background:#e4e6dd;display:flex;align-items:center;justify-content:center;padding:20px;text-align:center;align-self:start;overflow:hidden}
+.poster-label{font-size:clamp(19px,2.8vw,29px);font-weight:700;line-height:1.15;letter-spacing:-.04em;color:var(--green)}
+.poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#e4e6dd}
+.poster.loading .poster-label:after{content:' …'}
+.details{padding:57px 30px 30px}
+.day{font-size:11px;color:var(--red);font-weight:700;text-transform:uppercase;letter-spacing:.13em}
+.details h2{font-size:clamp(26px,3.5vw,42px);line-height:1.1;letter-spacing:-.05em;margin:14px 0}
+.year{font-size:14px;color:var(--muted)}
+.details p{font-size:14px;line-height:1.6;margin-top:28px}
+.hint{margin-top:28px;font-size:12px;line-height:1.6;color:var(--muted)}
+.close{position:absolute;top:12px;right:12px;z-index:5;border:1px solid var(--line);background:var(--bg);color:var(--ink);width:36px;height:36px;border-radius:6px;font-size:24px;line-height:1;cursor:pointer}
+@media(max-width:850px){.grid{grid-template-columns:repeat(6,minmax(0,1fr))}header{padding-top:50px}}
+@media(max-width:620px){.wrap{padding:22px 16px 44px}.topline{padding-bottom:16px}header{display:block;padding:44px 0 25px}.toolbar{margin-top:28px;flex-direction:row;align-items:center;justify-content:space-between;gap:12px}.grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.door{padding:10px}.door-number{font-size:28px}.door-symbol{top:9px;right:9px;font-size:13px}.door-status{font-size:8px}.footer{display:block}.panel{grid-template-columns:1fr}.poster{width:min(100%,250px);margin:0 auto}.details{padding:20px 24px 30px}.details p{margin-top:19px}}
+@media(max-width:360px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(prefers-reduced-motion:reduce){.door,.toolbar button{transition:none}.door:hover{transform:none}}
 </style>
 </head>
 <body>
-<div class="snow"></div>
 <main class="wrap">
-<header><div class="eyebrow">A movie every day</div><h1>Advent Cinema</h1>
-<div class="sub">December 2026 — January 1, 2027 · 32 little surprises</div>
-<div class="toolbar"><span class="count" id="progress"></span><button type="button" id="demo">Preview all doors: off</button></div>
-</header>
-<div class="moon" aria-hidden="true">☾</div><div class="story-scene"><div class="roof" aria-hidden="true"><div class="chimney"></div><div class="peak"></div><div class="roof-base"></div><div class="snowcap"></div><div class="star-window"></div><div class="garland">❦ ✦ ❦ ✦ ❦ ✦ ❦</div></div><div class="house"><div class="house-title">The little cinema house</div><section class="grid" id="calendar" aria-label="Movie advent calendar"></section></div><div class="snowbank"></div><div class="ground-decor" aria-hidden="true"><span>🌲</span><span>🎁</span><span>⛄</span><span>🎄</span><span>🎁</span><span>🌲</span></div></div>
-<div class="footer">Made for cozy December evenings ✦ Doors open at midnight in Kyiv.</div>
+<div class="topline"><div class="brand"><span class="brand-mark" aria-hidden="true">✳</span> Advent Cinema</div><div class="edition">2026 / 2027</div></div>
+<header><div><p class="kicker">The holiday film calendar</p><h1>32 days.<br>32 films.</h1><p class="sub">A new movie every day, December 1 — January 1.</p></div>
+<div class="toolbar"><span class="count" id="progress"></span><button type="button" id="demo" aria-pressed="false">Preview all doors: off</button></div></header>
+<div class="key" aria-label="Calendar legend"><span><i class="swatch green"></i> Open</span><span><i class="swatch"></i> Upcoming</span><span><i class="swatch light"></i> Locked until date</span></div>
+<section class="grid" id="calendar" aria-label="Movie advent calendar"></section>
+<footer class="footer"><span>Doors open automatically at midnight, Kyiv time.</span><span class="star">✳ Christmas, one film at a time.</span></footer>
 </main>
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="movie-title">
 <div class="panel">
 <button class="close" id="close" aria-label="Close">×</button>
 <div class="poster" id="poster"><div class="poster-label" id="poster-label"></div></div>
 <div class="details"><div class="day" id="day"></div><h2 id="movie-title"></h2><div class="year" id="year"></div>
-<p>Tonight’s Christmas-season movie surprise. Get comfortable, make something warm to drink, and enjoy!</p>
-<div class="hint">Posters are fetched from film-specific Wikipedia pages. Some films may display a title card instead.</div></div>
+<p>Tonight’s film. Get comfortable, make something warm to drink, and enjoy.</p>
+<div class="hint">Posters are retrieved from movie-specific Wikipedia pages where available.</div></div>
 </div></div>
 <script>
 const titles=[['Miracle on 34th Street',1947],['The Man Who Invented Christmas',2017],['Plácido',1961],['The Shop Around the Corner',1940],['Batman Returns',1992],['Arthur Christmas',2011],['Tangerine',2015],['Little Women',1994],['Better Watch Out',2016],['Kiss Kiss Bang Bang',2005],['Gremlins',1984],['Scrooge',1951],['A Christmas Story',1983],['Remember the Night',1940],['Anna and the Apocalypse',2017],['A Christmas Tale',2008],['Rare Exports: A Christmas Tale',2010],['Carol',2015],['A Biltmore Christmas',2023],['The Muppet Christmas Carol',1992],['Hogfather',2006],['Edward Scissorhands',1990],['Happiest Season',2020],['Tokyo Godfathers',2003],['The Holdovers',2023],['Die Hard',1988],['The Thin Man',1934],['Trading Places',1983],['The Gold Rush',1925],['Holiday',1938],['After the Thin Man',1936],['The Apartment',1960]];
 const wikiPages=['Miracle on 34th Street','The Man Who Invented Christmas (film)','Plácido (film)','The Shop Around the Corner','Batman Returns','Arthur Christmas','Tangerine (film)','Little Women (1994 film)','Better Watch Out','Kiss Kiss Bang Bang','Gremlins','Scrooge (1951 film)','A Christmas Story','Remember the Night','Anna and the Apocalypse','A Christmas Tale (2008 film)','Rare Exports: A Christmas Tale','Carol (film)','A Biltmore Christmas','The Muppet Christmas Carol','Hogfather (film)','Edward Scissorhands','Happiest Season','Tokyo Godfathers','The Holdovers','Die Hard','The Thin Man (film)','Trading Places','The Gold Rush','Holiday (1938 film)','After the Thin Man','The Apartment'];
-const doorColors=['#286966','#a94658','#6278a0','#cc8a38','#667f4a','#aa6b9c','#3e7f9c','#8d5940','#bc5678','#487a68','#8a6bac','#c17857'];
-const doorIcons=['🎄','⭐','🎀','🧸','❄️','🎁','🕯️','🐈','🍪','🔔','🦌','🍬','🌿','🧣','✨','☕','🐦','🎠','🎅','🍊','🦊','🌙','🧤','🪄','🧦','🎬','⛸️','🎼','🎟️','🕰️','🎉','🥂'];
 const $=id=>document.getElementById(id);
 const posterCache={};
 const cacheKey='advent-2026-poster-urls-v8';
@@ -185,8 +128,7 @@ function render(){
   const b=document.createElement('button');
   b.className='door'+(unlocked(i)?'':' locked')+(passed(i)?' opened':'')+(i===31?' special':'');
   b.setAttribute('aria-label',(i===31?'January 1':`December ${i+1}`)+(unlocked(i)?`, ${title}`:', locked'));
-  b.style.setProperty('--door',doorColors[i%doorColors.length]);
-  b.innerHTML=`<div class="frame"><span class="lattice"></span><span class="ornament">${i%4===0?'❦':i%4===1?'✦':i%4===2?'❅':'♡'}</span><span class="number">${i===31?'JAN 1':i+1}</span><span class="mini-art" aria-hidden="true">${doorIcons[i]}</span><span class="knob"></span></div>`;
+  b.innerHTML=`<span class="door-number">${i===31?'01':String(i+1).padStart(2,'0')}</span><span class="door-symbol" aria-hidden="true">${passed(i)?'↗':unlocked(i)?'↗':'+'}</span><span class="door-status">${passed(i)?'Open':unlocked(i)?'Preview':'December '+(i+1)}</span>`;
   b.onclick=()=>{if(!unlocked(i)){alert('This door opens on '+(i===31?'January 1, 2027':`December ${i+1}, 2026`)+' in Kyiv.');return}show(i)};
   grid.appendChild(b);
  });
@@ -212,7 +154,7 @@ function show(i){
 $('close').onclick=()=>{$('modal').classList.remove('show');posterRequest++};
 $('modal').onclick=e=>{if(e.target===$('modal'))$('close').click()};
 document.addEventListener('keydown',e=>{if(e.key==='Escape')$('close').click()});
-$('demo').onclick=()=>{preview=!preview;$('demo').textContent='Preview all doors: '+(preview?'on':'off');render()};
+$('demo').onclick=()=>{preview=!preview;$('demo').textContent='Preview all doors: '+(preview?'on':'off');$('demo').setAttribute('aria-pressed',String(preview));render()};
 render();setInterval(render,60000);
 if('requestIdleCallback' in window)requestIdleCallback(warmPosters);else setTimeout(warmPosters,250);
 </script>
