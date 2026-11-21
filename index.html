@@ -24,7 +24,7 @@ h1{font-size:clamp(48px,7.2vw,86px);font-weight:700;letter-spacing:-.065em;line-
 .count{color:var(--muted);font-size:13px}
 .toolbar button{border:1px solid var(--green);color:var(--green);background:transparent;border-radius:6px;padding:11px 15px;font-size:12px;font-weight:700;cursor:pointer;transition:background .15s,color .15s}
 .toolbar button:hover,.toolbar button[aria-pressed="true"]{background:var(--green);color:white}
-.grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:10px}
+.grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:10px;margin-top:12px}
 .door{position:relative;aspect-ratio:1/1.13;border:0;border-radius:8px;background:var(--door-color,var(--red));color:#FFFFFF;padding:13px;display:flex;align-items:flex-start;justify-content:space-between;flex-direction:column;text-align:left;cursor:pointer;transition:background .16s ease,transform .16s ease;overflow:hidden}
 .door:hover{transform:translateY(-2px)}
 .door:focus-visible{outline:3px solid #C09207;outline-offset:3px}
@@ -60,9 +60,6 @@ h1{font-size:clamp(48px,7.2vw,86px);font-weight:700;letter-spacing:-.065em;line-
 </head>
 <body>
 <main class="wrap">
-<div class="topline"><div class="brand">Movie Advent</div><div class="edition">2026 / 2027</div></div>
-<header><div><p class="kicker">The holiday film calendar</p><h1>Movie Advent</h1><p class="sub">A new movie every day, December 1 — January 1.</p></div>
-<div class="toolbar"><span class="count" id="progress"></span><button type="button" id="demo" aria-pressed="true">Preview all doors: on</button></div></header>
 <section class="grid" id="calendar" aria-label="Movie advent calendar"></section>
 <footer class="footer"><div class="tmdb-credit">Movie posters provided by <a href="https://www.themoviedb.org/" target="_blank" rel="noopener noreferrer">TMDB</a>. This product uses the TMDB API but is not endorsed or certified by TMDB.</div></footer>
 </main>
@@ -150,7 +147,6 @@ function render(){
   b.onclick=()=>{if(!unlocked(i)){alert('This door opens on '+(i===31?'January 1, 2027':`December ${i+1}, 2026`)+' in Kyiv.');return}show(i)};
   grid.appendChild(b);
  });
- $('progress').textContent=`${titles.filter((_,i)=>passed(i)).length} of 32 doors opened by date`;
 }
 function show(i){
  const [title,year]=titles[i];
@@ -172,7 +168,6 @@ function show(i){
 $('close').onclick=()=>{$('modal').classList.remove('show');posterRequest++};
 $('modal').onclick=e=>{if(e.target===$('modal'))$('close').click()};
 document.addEventListener('keydown',e=>{if(e.key==='Escape')$('close').click()});
-$('demo').onclick=()=>{preview=!preview;$('demo').textContent='Preview all doors: '+(preview?'on':'off');$('demo').setAttribute('aria-pressed',String(preview));render()};
 render();setInterval(render,60000);
 // Poster paths are static; no background search or download is necessary.
 </script>
