@@ -46,7 +46,7 @@ h1{font-size:clamp(48px,7.2vw,86px);font-weight:700;letter-spacing:-.065em;line-
 .day{font-size:11px;color:var(--red);font-weight:700;text-transform:uppercase;letter-spacing:.13em}
 .details h2{font-size:clamp(26px,3.5vw,42px);line-height:1.1;letter-spacing:-.05em;margin:14px 0}
 .year{font-size:14px;color:var(--muted)}
-.details p{font-size:14px;line-height:1.6;margin-top:28px}
+.details p{font-size:14px;line-height:1.65;margin-top:28px}.synopsis{max-width:40ch}
 .hint{margin-top:28px;font-size:12px;line-height:1.6;color:var(--muted)}
 .close{position:absolute;top:12px;right:12px;z-index:5;border:1px solid var(--line);background:var(--bg);color:var(--ink);width:36px;height:36px;border-radius:6px;font-size:24px;line-height:1;cursor:pointer}
 @media(max-width:850px){.grid{grid-template-columns:repeat(6,minmax(0,1fr))}header{padding-top:50px}}
@@ -68,11 +68,45 @@ h1{font-size:clamp(48px,7.2vw,86px);font-weight:700;letter-spacing:-.065em;line-
 <button class="close" id="close" aria-label="Close">×</button>
 <div class="poster" id="poster"><div class="poster-label" id="poster-label"></div></div>
 <div class="details"><div class="day" id="day"></div><h2 id="movie-title"></h2><div class="year" id="year"></div>
-<p>Tonight’s film. Get comfortable, make something warm to drink, and enjoy.</p>
+<p class="synopsis" id="movie-description"></p>
 <div class="hint">Movie posters provided by TMDB. This product uses the TMDB API but is not endorsed or certified by TMDB.</div></div>
 </div></div>
 <script>
 const titles=[['Miracle on 34th Street',1947],['The Man Who Invented Christmas',2017],['Plácido',1961],['The Shop Around the Corner',1940],['Batman Returns',1992],['Arthur Christmas',2011],['Tangerine',2015],['Little Women',1994],['Better Watch Out',2016],['Kiss Kiss Bang Bang',2005],['Gremlins',1984],['Scrooge',1951],['A Christmas Story',1983],['Remember the Night',1940],['Anna and the Apocalypse',2017],['A Christmas Tale',2008],['Rare Exports: A Christmas Tale',2010],['Carol',2015],['A Biltmore Christmas',2023],['The Muppet Christmas Carol',1992],['Hogfather',2006],['Edward Scissorhands',1990],['Happiest Season',2020],['Tokyo Godfathers',2003],['The Holdovers',2023],['Die Hard',1988],['The Thin Man',1934],['Trading Places',1983],['The Gold Rush',1925],['Holiday',1938],['After the Thin Man',1936],['The Apartment',1960]];
+const movieDescriptions=[
+  "A department-store Santa insists he is the real Kris Kringle, inspiring a young girl and an unforgettable courtroom case.",
+  "Charles Dickens struggles with writer’s block while the characters of A Christmas Carol begin taking shape in his imagination.",
+  "In a small Spanish town, a businessman’s plan to impress a visiting charity delegation spirals into a sharp holiday satire.",
+  "Two quarrelling coworkers at a Budapest shop unknowingly fall in love through anonymous letters.",
+  "Gotham faces the Penguin and Catwoman as Batman navigates a dark, snow-covered Christmas season.",
+  "Santa’s well-meaning son Arthur sets out on a frantic mission to deliver one forgotten Christmas present.",
+  "On Christmas Eve in Los Angeles, two transgender friends embark on a chaotic search for answers across the city.",
+  "Four sisters navigate family, ambition, love, and growing up in this warm adaptation of Louisa May Alcott’s novel.",
+  "A babysitting job takes a sinister turn when a young boy and his friend have plans of their own.",
+  "A detective story unfolds in Los Angeles when a petty thief, an actress, and a private investigator become tangled in murder.",
+  "A boy’s unusual Christmas gift brings mischievous creatures—and absolute mayhem—to a sleepy town.",
+  "A bitter miser encounters three spirits who offer him a chance to change his life on Christmas Eve.",
+  "A young boy in 1940s Indiana is determined to get a Red Ryder BB gun for Christmas, despite everyone’s warnings.",
+  "A woman arrested just before Christmas is released into a prosecutor’s custody, leading to an unexpected holiday journey.",
+  "As a zombie outbreak hits a Scottish town, a teenager and her friends sing and fight their way toward safety.",
+  "A troubled French family reunites for Christmas, stirring up old resentments, complicated loyalties, and unexpected connections.",
+  "A Finnish village discovers something frightening buried beneath the ice as Christmas approaches.",
+  "Two women develop a powerful connection in 1950s New York, despite the expectations and restrictions surrounding them.",
+  "A screenwriter is transported into a classic Christmas movie and finds herself caught in its romantic storyline.",
+  "The Muppets bring humor, music, and heart to Dickens’s tale of Ebenezer Scrooge and his Christmas visitors.",
+  "In a world where holidays have a life of their own, Death steps in when the Hogfather mysteriously disappears.",
+  "A gentle young man with scissors for hands arrives in suburbia, where his gifts and differences change a community.",
+  "Returning home for Christmas, a woman plans to propose to her girlfriend—until she learns her partner hasn’t come out.",
+  "Three unhoused people in Tokyo discover an abandoned baby on Christmas Eve and set off to find her family.",
+  "A grumpy teacher, a grieving student, and a school cook spend the winter holidays together at an almost-empty boarding school.",
+  "During a Christmas party at a Los Angeles skyscraper, an off-duty detective battles criminals who have seized the building.",
+  "A retired detective and his witty wife become caught up in a glamorous murder mystery over the holidays.",
+  "A wealthy investor and a street hustler swap circumstances after a cruel bet by two powerful businessmen.",
+  "Charlie Chaplin’s Little Tramp heads to Alaska during the Gold Rush, encountering hardship, friendship, and romance.",
+  "A free-spirited young man falls for a wealthy woman but refuses to surrender his independence for her family’s expectations.",
+  "Nick and Nora Charles investigate another murder while navigating witty banter, high society, and New Year festivities.",
+  "A lonely office worker lends his apartment to executives seeking affairs, complicating his career and romantic life."
+];
 // Red, green, gold repeating palette used by every calendar door.
 const doorPalette=['#CA020D','#28560E','#946900'];
 // Curated TMDB poster paths are generated once by the GitHub Action.
@@ -118,7 +152,7 @@ function render(){
 function show(i){
  const [title,year]=titles[i];
  $('day').textContent=i===31?'New Year’s Day · January 1':`December ${i+1}`;
- $('movie-title').textContent=title;$('year').textContent=year;
+ $('movie-title').textContent=title;$('year').textContent=year;$('movie-description').textContent=movieDescriptions[i];
  const p=$('poster');p.querySelectorAll('img').forEach(el=>el.remove());
  $('poster-label').textContent=title;$('poster-label').style.display='block';p.classList.add('loading');
  $('modal').classList.add('show');$('close').focus();
