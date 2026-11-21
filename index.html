@@ -172,6 +172,26 @@ function navigateMovie(direction){
   if(unlocked(next)){if(next!==currentMovieIndex)show(next);return}
  }
 }
+// Touch swipes navigate movies without interfering with vertical scrolling.
+let swipeStart=null;
+const swipeSurface=$('modal').querySelector('.panel');
+swipeSurface.addEventListener('touchstart',event=>{
+ if(event.touches.length!==1){swipeStart=null;return;}
+ const touch=event.touches[0];
+ swipeStart={x:touch.clientX,y:touch.clientY};
+},{passive:true});
+swipeSurface.addEventListener('touchend',event=>{
+ if(!swipeStart||event.changedTouches.length!==1){swipeStart=null;return;}
+ const touch=event.changedTouches[0];
+ const dx=touch.clientX-swipeStart.x;
+ const dy=touch.clientY-swipeStart.y;
+ swipeStart=null;
+ // Require a deliberate, predominantly horizontal gesture.
+ if(Math.abs(dx)>=55&&Math.abs(dx)>Math.abs(dy)*1.4){
+  navigateMovie(dx<0?1:-1);
+ }
+},{passive:true});
+swipeSurface.addEventListener('touchcancel',()=>{swipeStart=null;},{passive:true});
 $('close').onclick=()=>{$('modal').classList.remove('show');currentMovieIndex=null;posterRequest++};
 $('modal').onclick=e=>{if(e.target===$('modal'))$('close').click()};
 document.addEventListener('keydown',e=>{
