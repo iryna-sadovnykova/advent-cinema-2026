@@ -34,7 +34,8 @@ h1{font-size:clamp(48px,7.2vw,86px);font-weight:700;letter-spacing:-.065em;line-
 .door-status{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;opacity:.83}
 .door.opened .door-status{opacity:1}
 .door-symbol{position:absolute;right:12px;top:12px;font-size:17px;font-weight:500;line-height:1}
-.footer{border-top:1px solid var(--line);padding-top:22px;margin-top:32px;color:var(--muted);font-size:12px;line-height:1.6;display:flex;justify-content:space-between;gap:15px}
+.footer{border-top:1px solid var(--line);padding-top:22px;margin-top:32px;color:var(--muted);font-size:12px;line-height:1.6;display:flex;flex-direction:column;gap:15px}
+.footer-main{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
 .tmdb-credit{flex-basis:100%;font-size:11px;line-height:1.6;color:var(--muted)}
 .tmdb-credit a{color:var(--green);text-underline-offset:2px}
 .modal{position:fixed;inset:0;background:#102509bd;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}
@@ -63,7 +64,7 @@ h1{font-size:clamp(48px,7.2vw,86px);font-weight:700;letter-spacing:-.065em;line-
 <header><div><p class="kicker">The holiday film calendar</p><h1>Movie Advent</h1><p class="sub">A new movie every day, December 1 — January 1.</p></div>
 <div class="toolbar"><span class="count" id="progress"></span><button type="button" id="demo" aria-pressed="true">Preview all doors: on</button></div></header>
 <section class="grid" id="calendar" aria-label="Movie advent calendar"></section>
-<footer class="footer"><span>All doors are previewable; past dates turn gray automatically (Kyiv time).</span><span>Christmas, one film at a time.</span><span class="tmdb-credit">Movie posters provided by <a href="https://www.themoviedb.org/" target="_blank" rel="noopener noreferrer">TMDB</a>. This product uses the TMDB API but is not endorsed or certified by TMDB.</span></footer>
+<footer class="footer"><div class="footer-main"><span>All doors are previewable; past dates turn gray automatically (Kyiv time).</span><span>Christmas, one film at a time.</span></div><div class="tmdb-credit">Movie posters provided by <a href="https://www.themoviedb.org/" target="_blank" rel="noopener noreferrer">TMDB</a>. This product uses the TMDB API but is not endorsed or certified by TMDB.</div></footer>
 </main>
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="movie-title">
 <div class="panel">
