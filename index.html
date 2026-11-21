@@ -73,40 +73,27 @@ h1{font-size:clamp(48px,7.2vw,86px);font-weight:700;letter-spacing:-.065em;line-
 <div class="poster" id="poster"><div class="poster-label" id="poster-label"></div></div>
 <div class="details"><div class="day" id="day"></div><h2 id="movie-title"></h2><div class="year" id="year"></div>
 <p>Tonight’s film. Get comfortable, make something warm to drink, and enjoy.</p>
-<div class="hint">Posters are retrieved from movie-specific Wikipedia pages where available.</div></div>
+<div class="hint">Movie posters provided by TMDB. This product uses the TMDB API but is not endorsed or certified by TMDB.</div></div>
 </div></div>
 <script>
 const titles=[['Miracle on 34th Street',1947],['The Man Who Invented Christmas',2017],['Plácido',1961],['The Shop Around the Corner',1940],['Batman Returns',1992],['Arthur Christmas',2011],['Tangerine',2015],['Little Women',1994],['Better Watch Out',2016],['Kiss Kiss Bang Bang',2005],['Gremlins',1984],['Scrooge',1951],['A Christmas Story',1983],['Remember the Night',1940],['Anna and the Apocalypse',2017],['A Christmas Tale',2008],['Rare Exports: A Christmas Tale',2010],['Carol',2015],['A Biltmore Christmas',2023],['The Muppet Christmas Carol',1992],['Hogfather',2006],['Edward Scissorhands',1990],['Happiest Season',2020],['Tokyo Godfathers',2003],['The Holdovers',2023],['Die Hard',1988],['The Thin Man',1934],['Trading Places',1983],['The Gold Rush',1925],['Holiday',1938],['After the Thin Man',1936],['The Apartment',1960]];
-const wikiPages=['Miracle on 34th Street','The Man Who Invented Christmas (film)','Plácido (film)','The Shop Around the Corner','Batman Returns','Arthur Christmas','Tangerine (film)','Little Women (1994 film)','Better Watch Out','Kiss Kiss Bang Bang','Gremlins','Scrooge (1951 film)','A Christmas Story','Remember the Night','Anna and the Apocalypse','A Christmas Tale (2008 film)','Rare Exports: A Christmas Tale','Carol (film)','A Biltmore Christmas','The Muppet Christmas Carol','Hogfather (film)','Edward Scissorhands','Happiest Season','Tokyo Godfathers','The Holdovers','Die Hard','The Thin Man (film)','Trading Places','The Gold Rush','Holiday (1938 film)','After the Thin Man','The Apartment'];
+// Curated TMDB poster paths are generated once by the GitHub Action.
 const $=id=>document.getElementById(id);
-const posterCache={};
-const cacheKey='advent-2026-poster-urls-v8';
-try{Object.assign(posterCache,JSON.parse(localStorage.getItem(cacheKey)||'{}'))}catch(e){}
-let lookupPromise=null;
-async function loadPosterIndex(){
- if(lookupPromise)return lookupPromise;
- lookupPromise=(async()=>{
-  const params=new URLSearchParams({origin:'*',format:'json',action:'query',redirects:'1',titles:wikiPages.join('|'),prop:'pageimages',piprop:'thumbnail',pilicense:'any',pithumbsize:'900'});
-  const response=await fetch('https://en.wikipedia.org/w/api.php?'+params);
-  if(!response.ok)throw new Error('Poster index unavailable');
-  const data=await response.json();
-  const redirects=new Map((data.query?.redirects||[]).map(r=>[r.from,r.to]));
-  const normalized=new Map((data.query?.normalized||[]).map(r=>[r.from,r.to]));
-  const pages=Object.values(data.query?.pages||{});
-  wikiPages.forEach((name,i)=>{
-   const n=normalized.get(name)||name;
-   const found=pages.find(p=>p.title===(redirects.get(n)||n));
-   if(found?.thumbnail?.source)posterCache[i]=found.thumbnail.source;
-  });
-  try{localStorage.setItem(cacheKey,JSON.stringify(posterCache))}catch(e){}
-  return posterCache;
- })().catch(e=>{console.warn('Poster index unavailable',e);return posterCache});
- return lookupPromise;
+let posterManifestPromise=null;
+function posterManifest(){
+ if(!posterManifestPromise){
+  posterManifestPromise=fetch('./posters.json',{cache:'no-cache'})
+   .then(r=>r.ok?r.json():{posters:{}})
+   .catch(()=>({posters:{}}));
+ }
+ return posterManifestPromise;
 }
-async function posterUrl(i){if(posterCache[i])return posterCache[i];await loadPosterIndex();return posterCache[i]||null}
-async function warmPosters(){await loadPosterIndex();for(const i of Object.keys(posterCache).slice(0,5)){const img=new Image();img.src=posterCache[i]}}
-// Stable, balanced shuffle: colors feel random but do not change on reload.
-const doorPalette=['#CA020D','#28560E','#946900'];
+async function posterUrl(i){
+ const data=await posterManifest();
+ const path=data.posters?.[i];
+ if(typeof path!=='string'||!/^\/[a-zA-Z0-9_.-]+\.(jpg|jpeg|png|webp)$/.test(path))return null;
+ return 'https://image.tmdb.org/t/p/w500'+path;
+}
 let preview=true,posterRequest=0;
 function dateFor(i){return i===31?'2027-01-01':`2026-12-${String(i+1).padStart(2,'0')}`}
 function kyivToday(){
@@ -152,7 +139,7 @@ $('modal').onclick=e=>{if(e.target===$('modal'))$('close').click()};
 document.addEventListener('keydown',e=>{if(e.key==='Escape')$('close').click()});
 $('demo').onclick=()=>{preview=!preview;$('demo').textContent='Preview all doors: '+(preview?'on':'off');$('demo').setAttribute('aria-pressed',String(preview));render()};
 render();setInterval(render,60000);
-if('requestIdleCallback' in window)requestIdleCallback(warmPosters);else setTimeout(warmPosters,250);
+// Poster paths are static; no background search or download is necessary.
 </script>
 </body>
 </html>
