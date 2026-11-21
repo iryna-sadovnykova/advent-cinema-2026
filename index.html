@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#122734">
+<title>Advent Cinema · 2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap');
+:root{color-scheme:dark;--gold:#f2d59c;--cream:#fff3dc}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -15%,#334b57 0,#152a38 48%,#091721 100%);color:var(--cream);font-family:'DM Sans',sans-serif}
+.wrap{max-width:1140px;margin:auto;padding:54px 22px 70px}
+header{text-align:center;margin-bottom:34px}
+.eyebrow{text-transform:uppercase;letter-spacing:.36em;color:#e9c98e;font-size:12px}
+h1{font:700 clamp(40px,7vw,76px)/1.08 'Playfair Display',serif;margin:12px 0 10px;text-shadow:0 4px 30px #0008}
+.sub{color:#d4c6b4;font-size:15px}
+.toolbar{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;margin-top:20px}
+.toolbar button{border:1px solid #d9b97977;background:#ffffff0a;color:var(--cream);border-radius:999px;padding:10px 16px;cursor:pointer}
+.toolbar button:hover{background:#ffffff20}
+.count{font-size:13px;color:#c6b99e}
+.grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:15px}
+.door{position:relative;aspect-ratio:3/4.1;cursor:pointer;border:0;padding:0;background:transparent;color:inherit;text-align:center}
+.door:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
+.frame{position:absolute;inset:0;border:2px solid #d6b67c99;border-radius:11px;background:linear-gradient(145deg,#8e3447,#4c1d31);box-shadow:0 8px 16px #0006,inset 0 0 0 5px #3e1c2a,inset 0 0 0 7px #c49b63a8;overflow:hidden}
+.frame:after{content:'';position:absolute;inset:14px;border:1px solid #f1d59d55;border-radius:5px;pointer-events:none}
+.door:nth-child(3n+2) .frame{background:linear-gradient(145deg,#275c62,#14343e)}
+.door:nth-child(4n) .frame{background:linear-gradient(145deg,#79512c,#3c2929)}
+.door:nth-child(7n) .frame{background:linear-gradient(145deg,#425a82,#242a4e)}
+.number{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:700 clamp(25px,4vw,49px) 'Playfair Display',serif;color:#f9dfaa;text-shadow:0 2px 3px #0009}
+.ornament{position:absolute;top:12%;left:0;right:0;color:#eed29a88;font-size:20px}
+.knob{position:absolute;right:10%;top:49%;width:7px;height:7px;background:#e8ca8d;border-radius:50%;box-shadow:0 0 0 2px #4a2d31}
+.door:hover .frame{filter:brightness(1.17);transform:translateY(-3px)}
+.door.locked{cursor:not-allowed;filter:saturate(.55)}
+.door.opened .frame{background:linear-gradient(145deg,#284c45,#122f34);border-color:#b8caa2}
+.door.opened .number{opacity:.6}
+.door.opened:before{content:'✓';position:absolute;z-index:2;bottom:12px;left:0;right:0;color:#f5d9a4}
+.special{grid-column:span 2;aspect-ratio:auto;min-height:160px}
+.special .number{font-size:35px}
+.modal{position:fixed;inset:0;background:#030a10dd;display:none;align-items:center;justify-content:center;padding:22px;z-index:5;backdrop-filter:blur(8px)}
+.modal.show{display:flex}
+.panel{width:min(720px,100%);max-height:92vh;overflow:auto;background:#132a37;border:1px solid #d6b67c77;border-radius:18px;box-shadow:0 20px 90px #000a;display:grid;grid-template-columns:minmax(170px,40%) 1fr;position:relative}
+.poster{aspect-ratio:2/3;min-height:0;width:100%;background:radial-gradient(circle at 50% 25%,#a86d54,#452938 58%,#152e3b);display:flex;align-items:center;justify-content:center;padding:22px;text-align:center;position:relative;overflow:hidden;align-self:start}
+.poster:before{content:'✧';font-size:180px;position:absolute;color:#f4d3a322;top:-40px}
+.poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;z-index:2}
+.poster:has(img){padding:0;background:#0c1923}
+.poster:has(img):before{display:none}
+.poster-label{position:relative;z-index:1;font:700 clamp(25px,3vw,39px)/1.2 'Playfair Display',serif;text-shadow:0 4px 15px #000}
+.poster.loading .poster-label:after{content:'  ···';font-size:18px}
+.details{padding:40px 28px 30px}
+.day{color:#e7c58d;letter-spacing:.16em;text-transform:uppercase;font-size:12px}
+.details h2{font:700 35px/1.15 'Playfair Display',serif;margin:17px 0}
+.year{color:#c5b7a8}
+.details p{line-height:1.6}
+.close{position:absolute;right:12px;top:10px;border:0;background:#ffffff20;color:white;font-size:25px;border-radius:50%;width:38px;height:38px;cursor:pointer;z-index:3}
+.hint{font-size:12px;color:#b7a99b;margin-top:20px}
+.footer{text-align:center;margin:30px auto 0;color:#c6b99e;font-size:12px}
+.snow{position:fixed;inset:0;pointer-events:none;opacity:.25;background-image:radial-gradient(2px 2px at 20px 30px,white 99%,transparent),radial-gradient(2px 2px at 90px 110px,white 99%,transparent),radial-gradient(1px 1px at 160px 80px,white 99%,transparent);background-size:210px 180px}
+@media(max-width:800px){.grid{grid-template-columns:repeat(4,1fr);gap:10px}}
+@media(max-width:500px){.grid{grid-template-columns:repeat(3,1fr);gap:9px}.wrap{padding:44px 14px}.panel{grid-template-columns:1fr}.poster{width:min(100%,300px);margin:auto}.details{padding:22px}.details h2{font-size:28px}.special{min-height:130px}}
+</style>
+</head>
+<body>
+<div class="snow"></div>
+<main class="wrap">
+<header><div class="eyebrow">A movie every day</div><h1>Advent Cinema</h1>
+<div class="sub">December 2026 — January 1, 2027 · 32 little surprises</div>
+<div class="toolbar"><span class="count" id="progress"></span><button type="button" id="demo">Preview all doors: off</button></div>
+</header>
+<section class="grid" id="calendar" aria-label="Movie advent calendar"></section>
+<div class="footer">Made for cozy December evenings ✦ Doors open at midnight in Kyiv.</div>
+</main>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="movie-title">
+<div class="panel">
+<button class="close" id="close" aria-label="Close">×</button>
+<div class="poster" id="poster"><div class="poster-label" id="poster-label"></div></div>
+<div class="details"><div class="day" id="day"></div><h2 id="movie-title"></h2><div class="year" id="year"></div>
+<p>Tonight’s Christmas-season movie surprise. Get comfortable, make something warm to drink, and enjoy!</p>
+<div class="hint">Posters are fetched from film-specific Wikipedia pages. Some films may display a title card instead.</div></div>
+</div></div>
+<script>
+const titles=[['Miracle on 34th Street',1947],['The Man Who Invented Christmas',2017],['Plácido',1961],['The Shop Around the Corner',1940],['Batman Returns',1992],['Arthur Christmas',2011],['Tangerine',2015],['Little Women',1994],['Better Watch Out',2016],['Kiss Kiss Bang Bang',2005],['Gremlins',1984],['Scrooge',1951],['A Christmas Story',1983],['Remember the Night',1940],['Anna and the Apocalypse',2017],['A Christmas Tale',2008],['Rare Exports: A Christmas Tale',2010],['Carol',2015],['A Biltmore Christmas',2023],['The Muppet Christmas Carol',1992],['Hogfather',2006],['Edward Scissorhands',1990],['Happiest Season',2020],['Tokyo Godfathers',2003],['The Holdovers',2023],['Die Hard',1988],['The Thin Man',1934],['Trading Places',1983],['The Gold Rush',1925],['Holiday',1938],['After the Thin Man',1936],['The Apartment',1960]];
+const wikiPages=['Miracle on 34th Street','The Man Who Invented Christmas (film)','Plácido (film)','The Shop Around the Corner','Batman Returns','Arthur Christmas','Tangerine (film)','Little Women (1994 film)','Better Watch Out','Kiss Kiss Bang Bang','Gremlins','Scrooge (1951 film)','A Christmas Story','Remember the Night','Anna and the Apocalypse','A Christmas Tale (2008 film)','Rare Exports: A Christmas Tale','Carol (film)','A Biltmore Christmas','The Muppet Christmas Carol','Hogfather (film)','Edward Scissorhands','Happiest Season','Tokyo Godfathers','The Holdovers','Die Hard','The Thin Man (film)','Trading Places','The Gold Rush','Holiday (1938 film)','After the Thin Man','The Apartment'];
+const $=id=>document.getElementById(id);
+const posterCache={};
+const cacheKey='advent-2026-poster-urls-v8';
+try{Object.assign(posterCache,JSON.parse(localStorage.getItem(cacheKey)||'{}'))}catch(e){}
+let lookupPromise=null;
+async function loadPosterIndex(){
+ if(lookupPromise)return lookupPromise;
+ lookupPromise=(async()=>{
+  const params=new URLSearchParams({origin:'*',format:'json',action:'query',redirects:'1',titles:wikiPages.join('|'),prop:'pageimages',piprop:'thumbnail',pilicense:'any',pithumbsize:'900'});
+  const response=await fetch('https://en.wikipedia.org/w/api.php?'+params);
+  if(!response.ok)throw new Error('Poster index unavailable');
+  const data=await response.json();
+  const redirects=new Map((data.query?.redirects||[]).map(r=>[r.from,r.to]));
+  const normalized=new Map((data.query?.normalized||[]).map(r=>[r.from,r.to]));
+  const pages=Object.values(data.query?.pages||{});
+  wikiPages.forEach((name,i)=>{
+   const n=normalized.get(name)||name;
+   const found=pages.find(p=>p.title===(redirects.get(n)||n));
+   if(found?.thumbnail?.source)posterCache[i]=found.thumbnail.source;
+  });
+  try{localStorage.setItem(cacheKey,JSON.stringify(posterCache))}catch(e){}
+  return posterCache;
+ })().catch(e=>{console.warn('Poster index unavailable',e);return posterCache});
+ return lookupPromise;
+}
+async function posterUrl(i){if(posterCache[i])return posterCache[i];await loadPosterIndex();return posterCache[i]||null}
+async function warmPosters(){await loadPosterIndex();for(const i of Object.keys(posterCache).slice(0,5)){const img=new Image();img.src=posterCache[i]}}
+let preview=false,posterRequest=0;
+function dateFor(i){return i===31?'2027-01-01':`2026-12-${String(i+1).padStart(2,'0')}`}
+function kyivToday(){
+ const parts=new Intl.DateTimeFormat('en-US',{timeZone:'Europe/Kyiv',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+ const get=t=>parts.find(p=>p.type===t).value;
+ return `${get('year')}-${get('month')}-${get('day')}`;
+}
+function passed(i){return kyivToday()>=dateFor(i)}
+function unlocked(i){return preview||passed(i)}
+function render(){
+ const grid=$('calendar');grid.innerHTML='';
+ titles.forEach(([title,year],i)=>{
+  const b=document.createElement('button');
+  b.className='door'+(unlocked(i)?'':' locked')+(passed(i)?' opened':'')+(i===31?' special':'');
+  b.setAttribute('aria-label',(i===31?'January 1':`December ${i+1}`)+(unlocked(i)?`, ${title}`:', locked'));
+  b.innerHTML=`<div class="frame"><span class="ornament">✦</span><span class="number">${i===31?'JAN 1':i+1}</span><span class="knob"></span></div>`;
+  b.onclick=()=>{if(!unlocked(i)){alert('This door opens on '+(i===31?'January 1, 2027':`December ${i+1}, 2026`)+' in Kyiv.');return}show(i)};
+  grid.appendChild(b);
+ });
+ $('progress').textContent=`${titles.filter((_,i)=>passed(i)).length} of 32 doors opened by date`;
+}
+function show(i){
+ const [title,year]=titles[i];
+ $('day').textContent=i===31?'New Year’s Day · January 1':`December ${i+1}`;
+ $('movie-title').textContent=title;$('year').textContent=year;
+ const p=$('poster');p.querySelectorAll('img').forEach(el=>el.remove());
+ $('poster-label').textContent=title;$('poster-label').style.display='block';p.classList.add('loading');
+ $('modal').classList.add('show');$('close').focus();
+ const request=++posterRequest;
+ posterUrl(i).then(url=>{
+  if(request!==posterRequest)return;
+  if(!url){p.classList.remove('loading');return}
+  const img=new Image();img.alt=`${title} (${year}) film artwork`;
+  img.onload=()=>{if(request!==posterRequest)return;p.appendChild(img);$('poster-label').style.display='none';p.classList.remove('loading')};
+  img.onerror=()=>{if(request===posterRequest)p.classList.remove('loading')};
+  img.src=url;
+ }).catch(()=>p.classList.remove('loading'));
+}
+$('close').onclick=()=>{$('modal').classList.remove('show');posterRequest++};
+$('modal').onclick=e=>{if(e.target===$('modal'))$('close').click()};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')$('close').click()});
+$('demo').onclick=()=>{preview=!preview;$('demo').textContent='Preview all doors: '+(preview?'on':'off');render()};
+render();setInterval(render,60000);
+if('requestIdleCallback' in window)requestIdleCallback(warmPosters);else setTimeout(warmPosters,250);
+</script>
+</body>
+</html>
