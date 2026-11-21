@@ -3,16 +3,19 @@
   "posters": {
     "0": "/vehuIm3y6BeMI7mYjxzaA1H8M0k.jpg",
     "1": "/qRkzRue5rTzB6PESXBJCKqROOXC.jpg",
+    "2": "/9xzbq4B8z9i53KGvIhBIKSDyoCa.jpg",
     "3": "/dZ1aEzGYRiqJwPfjS6VL7wUkHmF.jpg",
     "4": "/jKBjeXM7iBBV9UkUcOXx3m7FSHY.jpg",
     "5": "/brELZkSbkLrcCXJ0xt5hQUMXhut.jpg",
     "6": "/EKLR5c61XQzBTeMokFrmS3kdt8.jpg",
     "7": "/1ZzH1XMcKAe5NdrKL5MfcqZHHsZ.jpg",
+    "8": "/liI4c3GYaKuAo4FsCF4RKvFFqbV.jpg",
     "9": "/aWfjIkpENFX6Uw82pET7EQ6jnrd.jpg",
     "10": "/6m0F7fsXjQvUbCZrPWcJNrjvIui.jpg",
     "11": "/sxLRt2u5xgUgkrIAPyE0KiiSVnX.jpg",
     "12": "/34nSHYqmb7222tiqiuKqKJmZiQa.jpg",
     "13": "/kPeGe9VApDwwWgUSRiUCch7Huj7.jpg",
+    "14": "/jVyqqMzDVRjUMeIoaJKSUpRnB9Y.jpg",
     "15": "/qXXFkHSU62sBUsAmuAJC3n7XGac.jpg",
     "16": "/jzaweEESl54ejxo3EE5uNL8lgTn.jpg",
     "17": "/cJeled7EyPdur6TnCA5GYg0UVna.jpg",
@@ -42,6 +45,12 @@
       "title": "The Man Who Invented Christmas",
       "year": 2017,
       "tmdb_id": 450322,
+      "media_type": "movie"
+    },
+    "2": {
+      "title": "Plácido",
+      "year": 1961,
+      "tmdb_id": 51317,
       "media_type": "movie"
     },
     "3": {
@@ -74,6 +83,12 @@
       "tmdb_id": 9587,
       "media_type": "movie"
     },
+    "8": {
+      "title": "Better Watch Out",
+      "year": 2016,
+      "tmdb_id": 406994,
+      "media_type": "movie"
+    },
     "9": {
       "title": "Kiss Kiss Bang Bang",
       "year": 2005,
@@ -102,6 +117,12 @@
       "title": "Remember the Night",
       "year": 1940,
       "tmdb_id": 29617,
+      "media_type": "movie"
+    },
+    "14": {
+      "title": "Anna and the Apocalypse",
+      "year": 2017,
+      "tmdb_id": 461928,
       "media_type": "movie"
     },
     "15": {
