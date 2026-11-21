@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#28560E">
 <title>Movie Advent · 2026</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Dancing+Script:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
 :root{color-scheme:light;--bg:#f7f5ed;--ink:#28560E;--muted:#53664B;--green:#28560E;--red:#CA020D;--cream:#f7f5ed;--line:#D9D4BC}
 *{box-sizing:border-box}
 body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:'DM Sans',Arial,sans-serif}
@@ -17,7 +17,7 @@ button{font:inherit}
 .edition{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.12em}
 header{padding:65px 0 22px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end}
 .kicker{text-transform:uppercase;letter-spacing:.18em;font-weight:700;color:var(--red);font-size:12px;margin:0 0 15px}
-h1{font-family:'Dancing Script',cursive;font-size:clamp(64px,9vw,112px);font-weight:700;letter-spacing:-.025em;line-height:1.15;margin:0}
+h1{font-size:clamp(48px,7.2vw,86px);font-weight:700;letter-spacing:-.065em;line-height:.98;margin:0}
 .sub{color:var(--muted);font-size:15px;line-height:1.5;margin:17px 0 0}
 .toolbar{display:flex;flex-direction:column;align-items:flex-end;gap:12px}
 .count{color:var(--muted);font-size:13px}
@@ -34,8 +34,6 @@ h1{font-family:'Dancing Script',cursive;font-size:clamp(64px,9vw,112px);font-wei
 .door-status{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;opacity:.83}
 .door.opened .door-status{opacity:1}
 .door-symbol{position:absolute;right:12px;top:12px;font-size:17px;font-weight:500;line-height:1}
-.door.special{grid-column:span 2;aspect-ratio:auto;min-height:120px}
-.door.special .door-number{font-size:clamp(27px,3.2vw,42px)}
 .footer{border-top:1px solid var(--line);padding-top:22px;margin-top:32px;color:var(--muted);font-size:12px;line-height:1.6;display:flex;justify-content:space-between;gap:15px}
 .modal{position:fixed;inset:0;background:#102509bd;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}
 .modal.show{display:flex}
@@ -108,7 +106,7 @@ function render(){
  const grid=$('calendar');grid.innerHTML='';
  titles.forEach(([title,year],i)=>{
   const b=document.createElement('button');
-  b.className='door'+(unlocked(i)?'':' locked')+(passed(i)?' opened':'')+(isPast(i)?' past':'')+(i===31?' special':'');
+  b.className='door'+(unlocked(i)?'':' locked')+(passed(i)?' opened':'')+(isPast(i)?' past':'');
   b.style.setProperty('--door-color',doorPalette[i%doorPalette.length]);
   b.setAttribute('aria-label',(i===31?'January 1':`December ${i+1}`)+(unlocked(i)?`, ${title}`:', locked'));
   b.innerHTML=`<span class="door-number">${i===31?'01':String(i+1).padStart(2,'0')}</span><span class="door-status">${i===31?'January':'December'}</span>`;
