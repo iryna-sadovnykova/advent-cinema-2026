@@ -126,7 +126,7 @@ async function posterUrl(i){
  if(typeof path!=='string'||!/^\/[a-zA-Z0-9_.-]+\.(jpg|jpeg|png|webp)$/.test(path))return null;
  return 'https://image.tmdb.org/t/p/w500'+path;
 }
-let preview=true,posterRequest=0;
+let preview=true,posterRequest=0,currentMovieIndex=null;
 function dateFor(i){return i===31?'2027-01-01':`2026-12-${String(i+1).padStart(2,'0')}`}
 function kyivToday(){
  const parts=new Intl.DateTimeFormat('en-US',{timeZone:'Europe/Kyiv',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
@@ -149,6 +149,8 @@ function render(){
  });
 }
 function show(i){
+ if(!unlocked(i))return;
+ currentMovieIndex=i;
  const [title,year]=titles[i];
  $('day').textContent=i===31?'New Year’s Day · January 1':`December ${i+1}`;
  $('movie-title').textContent=title;$('year').textContent=year;$('movie-description').textContent=movieDescriptions[i];
@@ -165,9 +167,23 @@ function show(i){
   img.src=url;
  }).catch(()=>p.classList.remove('loading'));
 }
-$('close').onclick=()=>{$('modal').classList.remove('show');posterRequest++};
+function navigateMovie(direction){
+ if(currentMovieIndex===null || !$('modal').classList.contains('show'))return;
+ for(let step=1;step<=titles.length;step++){
+  const next=(currentMovieIndex+direction*step+titles.length*2)%titles.length;
+  if(unlocked(next)){if(next!==currentMovieIndex)show(next);return}
+ }
+}
+$('close').onclick=()=>{$('modal').classList.remove('show');currentMovieIndex=null;posterRequest++};
 $('modal').onclick=e=>{if(e.target===$('modal'))$('close').click()};
-document.addEventListener('keydown',e=>{if(e.key==='Escape')$('close').click()});
+document.addEventListener('keydown',e=>{
+ if(!$('modal').classList.contains('show'))return;
+ if(e.key==='Escape'){$('close').click();return}
+ if(e.key==='ArrowRight'||e.key==='ArrowLeft'){
+  e.preventDefault();
+  navigateMovie(e.key==='ArrowRight'?1:-1);
+ }
+});
 render();setInterval(render,60000);
 // Poster paths are static; no background search or download is necessary.
 </script>
