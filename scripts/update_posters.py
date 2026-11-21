@@ -51,6 +51,12 @@ FILMS = [
     ("The Apartment", 1960, "movie"),
 ]
 ALIASES = {16: "Rare Exports"}  # TMDB's shorter title for the 2010 film
+# IMDb identifiers disambiguate films with alternative years and accented titles.
+IMDB_IDS = {
+    2: "tt0055310",  # Plácido (1961), Luis García Berlanga
+    8: "tt4443658",  # Better Watch Out (2016/2017)
+    14: "tt6433880", # Anna and the Apocalypse (2017/2018)
+}
 # To choose a specific record, set its TMDB numeric ID here and rerun the action.
 OVERRIDE_IDS = {}
 
@@ -83,26 +89,65 @@ def get_api(path, params=None):
                 raise
             time.sleep(1 + attempt * 2)
 
+def year_matches(record, target_year, date_key):
+    """Allow distribution-year differences, but not unrelated remakes."""
+    date = record.get(date_key, "")
+    return bool(date and date[:4].isdigit() and abs(int(date[:4]) - target_year) <= 2)
+
 def pick(title, year, kind, index):
     if index in OVERRIDE_IDS:
         return get_api(f"{kind}/{OVERRIDE_IDS[index]}")
+
+    # Prefer the definitive external identifier for the three problematic entries.
+    if kind == "movie" and index in IMDB_IDS:
+        found = get_api(f"find/{IMDB_IDS[index]}", {"external_source": "imdb_id"})
+        options = found.get("movie_results", [])
+        if options:
+            return options[0]
+
     query = ALIASES.get(index, title)
-    date_param = "year" if kind == "movie" else "first_air_date_year"
-    data = get_api(f"search/{kind}", {"query": query, date_param: year, "include_adult": "false"})
-    candidates = data.get("results", [])
-    expected = norm(query)
     title_key = "title" if kind == "movie" else "name"
     original_key = "original_title" if kind == "movie" else "original_name"
     date_key = "release_date" if kind == "movie" else "first_air_date"
+    expected = norm(query)
+
+    # Search by title without hard filtering by year; festival and theatrical
+    # premiere years are often different in TMDB's catalog.
+    data = get_api(f"search/{kind}", {"query": query, "include_adult": "false"})
+    candidates = data.get("results", [])
     exact = [
-        record for record in candidates
-        if str(record.get(date_key, "")).startswith(str(year))
-        and expected in (norm(record.get(title_key, "")), norm(record.get(original_key, "")))
+        item for item in candidates
+        if expected in (norm(item.get(title_key, "")), norm(item.get(original_key, "")))
+        and year_matches(item, year, date_key)
     ]
+    # Alternative title, if TMDB indexes the Spanish film without its accent.
+    if not exact and index == 2:
+        data = get_api("search/movie", {"query": "Placido", "include_adult": "false"})
+        exact = [
+            item for item in data.get("results", [])
+            if norm(item.get("title", "")) == "placido"
+            and year_matches(item, year, "release_date")
+        ]
     if not exact:
         return None
-    exact.sort(key=lambda record: (bool(record.get("poster_path")), record.get("popularity", 0)), reverse=True)
+    exact.sort(key=lambda item: (bool(item.get("poster_path")), item.get("popularity", 0)), reverse=True)
     return exact[0]
+
+def poster_for(item, kind):
+    path = item.get("poster_path") if item else None
+    if path:
+        return path
+    if not item:
+        return None
+    # A title may be correctly matched even when its default poster is unset.
+    images = get_api(f"{kind}/{item['id']}/images", {"include_image_language": "en,null,es"})
+    options = images.get("posters", [])
+    options.sort(key=lambda p: (
+        p.get("iso_639_1") == "en",
+        p.get("vote_average", 0),
+        p.get("width", 0)
+    ), reverse=True)
+    return options[0].get("file_path") if options else None
 
 def main():
     posters = {}
@@ -115,7 +160,7 @@ def main():
             print(f"Error retrieving {title} ({year}): {exc}", file=sys.stderr)
             missing.append(f"{i+1:02d}. {title} ({year}) — API error")
             continue
-        path = item.get("poster_path") if item else None
+        path = poster_for(item, kind)
         if not (isinstance(path, str) and re.fullmatch(r"/[A-Za-z0-9_.-]+\.(jpg|png|webp)", path)):
             missing.append(f"{i+1:02d}. {title} ({year}) — no verified poster match")
             continue
