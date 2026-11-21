@@ -35,6 +35,8 @@ h1{font-size:clamp(48px,7.2vw,86px);font-weight:700;letter-spacing:-.065em;line-
 .door.opened .door-status{opacity:1}
 .door-symbol{position:absolute;right:12px;top:12px;font-size:17px;font-weight:500;line-height:1}
 .footer{border-top:1px solid var(--line);padding-top:22px;margin-top:32px;color:var(--muted);font-size:12px;line-height:1.6;display:flex;justify-content:space-between;gap:15px}
+.tmdb-credit{flex-basis:100%;font-size:11px;line-height:1.6;color:var(--muted)}
+.tmdb-credit a{color:var(--green);text-underline-offset:2px}
 .modal{position:fixed;inset:0;background:#102509bd;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}
 .modal.show{display:flex}
 .panel{position:relative;background:var(--bg);color:var(--ink);width:min(690px,100%);max-height:92vh;overflow:auto;display:grid;grid-template-columns:minmax(180px,40%) 1fr;border-radius:10px}
@@ -61,7 +63,7 @@ h1{font-size:clamp(48px,7.2vw,86px);font-weight:700;letter-spacing:-.065em;line-
 <header><div><p class="kicker">The holiday film calendar</p><h1>Movie Advent</h1><p class="sub">A new movie every day, December 1 — January 1.</p></div>
 <div class="toolbar"><span class="count" id="progress"></span><button type="button" id="demo" aria-pressed="true">Preview all doors: on</button></div></header>
 <section class="grid" id="calendar" aria-label="Movie advent calendar"></section>
-<footer class="footer"><span>All doors are previewable; past dates turn gray automatically (Kyiv time).</span><span>Christmas, one film at a time.</span></footer>
+<footer class="footer"><span>All doors are previewable; past dates turn gray automatically (Kyiv time).</span><span>Christmas, one film at a time.</span><span class="tmdb-credit">Movie posters provided by <a href="https://www.themoviedb.org/" target="_blank" rel="noopener noreferrer">TMDB</a>. This product uses the TMDB API but is not endorsed or certified by TMDB.</span></footer>
 </main>
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="movie-title">
 <div class="panel">
@@ -69,7 +71,7 @@ h1{font-size:clamp(48px,7.2vw,86px);font-weight:700;letter-spacing:-.065em;line-
 <div class="poster" id="poster"><div class="poster-label" id="poster-label"></div></div>
 <div class="details"><div class="day" id="day"></div><h2 id="movie-title"></h2><div class="year" id="year"></div>
 <p class="synopsis" id="movie-description"></p>
-<div class="hint">Movie posters provided by TMDB. This product uses the TMDB API but is not endorsed or certified by TMDB.</div></div>
+</div>
 </div></div>
 <script>
 const titles=[['Miracle on 34th Street',1947],['The Man Who Invented Christmas',2017],['Plácido',1961],['The Shop Around the Corner',1940],['Batman Returns',1992],['Arthur Christmas',2011],['Tangerine',2015],['Little Women',1994],['Better Watch Out',2016],['Kiss Kiss Bang Bang',2005],['Gremlins',1984],['Scrooge',1951],['A Christmas Story',1983],['Remember the Night',1940],['Anna and the Apocalypse',2017],['A Christmas Tale',2008],['Rare Exports: A Christmas Tale',2010],['Carol',2015],['A Biltmore Christmas',2023],['The Muppet Christmas Carol',1992],['Hogfather',2006],['Edward Scissorhands',1990],['Happiest Season',2020],['Tokyo Godfathers',2003],['The Holdovers',2023],['Die Hard',1988],['The Thin Man',1934],['Trading Places',1983],['The Gold Rush',1925],['Holiday',1938],['After the Thin Man',1936],['The Apartment',1960]];
