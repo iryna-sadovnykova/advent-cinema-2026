@@ -29,7 +29,44 @@
     "28": "/eQRFo1qwRREYwj47Yoe1PisgOle.jpg",
     "29": "/vTswoixIge9o84NLlWGaWl5lrHO.jpg",
     "30": "/1fkCHOffEkPOY0UwSrvzG6YKDVp.jpg",
-    "31": "/hhSRt1KKfRT0yEhEtRW3qp31JFU.jpg"
+    "31": "/hhSRt1KKfRT0yEhEtRW3qp31JFU.jpg",
+    "13": "/3IR8uvrnegx61XD6vnBXY5t5nwO.jpg",
+    "18": "/q5imOj29jjwT4f8bn00amIRYiZa.jpg",
+    "27": "/4CeXigpnq1qfAJPap6xOynr5Wgu.jpg"
+  },
+  "runtimes": {
+    "0": 96,
+    "1": 94,
+    "2": 84,
+    "3": 99,
+    "4": 126,
+    "5": 97,
+    "6": 87,
+    "7": 116,
+    "8": 89,
+    "9": 103,
+    "10": 106,
+    "11": 86,
+    "12": 93,
+    "13": 122,
+    "14": 97,
+    "15": 152,
+    "16": 83,
+    "17": 118,
+    "18": 102,
+    "19": 92,
+    "20": 190,
+    "21": 105,
+    "22": 102,
+    "23": 86,
+    "24": 133,
+    "25": 132,
+    "26": 91,
+    "27": 100,
+    "28": 95,
+    "29": 97,
+    "30": 112,
+    "31": 126
   },
   "records": {
     "0": {
@@ -216,6 +253,12 @@
       "title": "The Apartment",
       "year": 1960,
       "tmdb_id": 284,
+      "media_type": "movie"
+    },
+    "18": {
+      "title": "Пекельна хоругва, або Різдво козацьке",
+      "year": 2019,
+      "tmdb_id": 662716,
       "media_type": "movie"
     }
   }
