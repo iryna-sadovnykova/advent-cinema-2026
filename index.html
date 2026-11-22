@@ -72,36 +72,36 @@ h1{font-size:clamp(48px,7.2vw,86px);font-weight:700;letter-spacing:-.065em;line-
 </div>
 </div></div>
 <script>
-const titles=[['Miracle on 34th Street',1947],['Щедрик',2022],['Plácido',1961],['The Shop Around the Corner',1940],['Batman Returns',1992],['Arthur Christmas',2011],['Tangerine',2015],['Памфір',2022],['Better Watch Out',2016],['Kiss Kiss Bang Bang',2005],['Gremlins',1984],['Scrooge',1951],['A Christmas Story',1983],['Remember the Night',1940],['Anna and the Apocalypse',2017],['A Christmas Tale',2008],['Rare Exports: A Christmas Tale',2010],['Carol',2015],['Пекельна хоругва, або Різдво козацьке',2019],['The Muppet Christmas Carol',1992],['Hogfather',2006],['Edward Scissorhands',1990],['Happiest Season',2020],['Tokyo Godfathers',2003],['The Holdovers',2023],['Die Hard',1988],['The Thin Man',1934],['Trading Places',1983],['The Gold Rush',1925],['Holiday',1938],['After the Thin Man',1936],['The Apartment',1960]];
+const titles=[['Miracle on 34th Street',1947],['Remember the Night',1940],['Plácido',1961],['The Shop Around the Corner',1940],['Batman Returns',1992],['Arthur Christmas',2011],['Tangerine',2015],['Trading Places',1983],['Better Watch Out',2016],['Kiss Kiss Bang Bang',2005],['Gremlins',1984],['Scrooge',1951],['A Christmas Story',1983],['Щедрик',2022],['Anna and the Apocalypse',2017],['A Christmas Tale',2008],['Rare Exports: A Christmas Tale',2010],['Carol',2015],['Пекельна хоругва, або Різдво козацьке',2019],['Tokyo Godfathers',2003],['Hogfather',2006],['Edward Scissorhands',1990],['Happiest Season',2020],['The Muppet Christmas Carol',1992],['The Holdovers',2023],['Die Hard',1988],['The Thin Man',1934],['Памфір',2022],['The Gold Rush',1925],['Holiday',1938],['After the Thin Man',1936],['The Apartment',1960]];
 const movieDescriptions=[
   "A department-store Santa insists he is the real Kris Kringle, inspiring a young girl and an unforgettable courtroom case.",
-  "As war engulfs their city, Ukrainian, Polish, and Jewish families struggle to protect their children, finding hope and solidarity through the song “Shchedryk”.",
+  "A woman arrested just before Christmas is released into a prosecutor’s custody, leading to an unexpected holiday journey.",
   "In a small Spanish town, a businessman’s plan to impress a visiting charity delegation spirals into a sharp holiday satire.",
   "Two quarrelling coworkers at a Budapest shop unknowingly fall in love through anonymous letters.",
   "Gotham faces the Penguin and Catwoman as Batman navigates a dark, snow-covered Christmas season.",
   "Santa’s well-meaning son Arthur sets out on a frantic mission to deliver one forgotten Christmas present.",
   "On Christmas Eve in Los Angeles, two transgender friends embark on a chaotic search for answers across the city.",
-  "Returning to his village near the Ukrainian border, a former smuggler hopes to live honestly, but a family crisis draws him back toward danger amid Malanka festivities.",
+  "A wealthy investor and a street hustler swap circumstances after a cruel bet by two powerful businessmen.",
   "A babysitting job takes a sinister turn when a young boy and his friend have plans of their own.",
   "A detective story unfolds in Los Angeles when a petty thief, an actress, and a private investigator become tangled in murder.",
   "A boy’s unusual Christmas gift brings mischievous creatures—and absolute mayhem—to a sleepy town.",
   "A bitter miser encounters three spirits who offer him a chance to change his life on Christmas Eve.",
   "A young boy in 1940s Indiana is determined to get a Red Ryder BB gun for Christmas, despite everyone’s warnings.",
-  "A woman arrested just before Christmas is released into a prosecutor’s custody, leading to an unexpected holiday journey.",
+  "As war engulfs their city, Ukrainian, Polish, and Jewish families struggle to protect their children, finding hope and solidarity through the song “Shchedryk”.",
   "As a zombie outbreak hits a Scottish town, a teenager and her friends sing and fight their way toward safety.",
   "A troubled French family reunites for Christmas, stirring up old resentments, complicated loyalties, and unexpected connections.",
   "A Finnish village discovers something frightening buried beneath the ice as Christmas approaches.",
   "Two women develop a powerful connection in 1950s New York, despite the expectations and restrictions surrounding them.",
   "A resourceful Cossack must outwit the Devil before Christmas in a fantastical adventure drawn from Ukrainian folklore and mythology.",
-  "The Muppets bring humor, music, and heart to Dickens’s tale of Ebenezer Scrooge and his Christmas visitors.",
+  "Three unhoused people in Tokyo discover an abandoned baby on Christmas Eve and set off to find her family.",
   "In a world where holidays have a life of their own, Death steps in when the Hogfather mysteriously disappears.",
   "A gentle young man with scissors for hands arrives in suburbia, where his gifts and differences change a community.",
   "Returning home for Christmas, a woman plans to propose to her girlfriend—until she learns her partner hasn’t come out.",
-  "Three unhoused people in Tokyo discover an abandoned baby on Christmas Eve and set off to find her family.",
+  "The Muppets bring humor, music, and heart to Dickens’s tale of Ebenezer Scrooge and his Christmas visitors.",
   "A grumpy teacher, a grieving student, and a school cook spend the winter holidays together at an almost-empty boarding school.",
   "During a Christmas party at a Los Angeles skyscraper, an off-duty detective battles criminals who have seized the building.",
   "A retired detective and his witty wife become caught up in a glamorous murder mystery over the holidays.",
-  "A wealthy investor and a street hustler swap circumstances after a cruel bet by two powerful businessmen.",
+  "Returning to his village near the Ukrainian border, a former smuggler hopes to live honestly, but a family crisis draws him back toward danger amid Malanka festivities.",
   "Charlie Chaplin’s Little Tramp heads to Alaska during the Gold Rush, encountering hardship, friendship, and romance.",
   "A free-spirited young man falls for a wealthy woman but refuses to surrender his independence for her family’s expectations.",
   "Nick and Nora Charles investigate another murder while navigating witty banter, high society, and New Year festivities.",
@@ -121,8 +121,8 @@ function posterManifest(){
  return posterManifestPromise;
 }
 const localPosters={
- 1:'./posters/shchedryk.jpeg',
- 7:'./posters/pamfir.jpeg',
+ 13:'./posters/shchedryk.jpeg',
+ 27:'./posters/pamfir.jpeg',
  18:'./posters/pekelna-khoruhva.jpeg'
 };
 async function posterUrl(i){
