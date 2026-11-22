@@ -72,38 +72,38 @@ h1{font-size:clamp(48px,7.2vw,86px);font-weight:700;letter-spacing:-.065em;line-
 </div>
 </div></div>
 <script>
-const titles=[['Miracle on 34th Street',1947],['Remember the Night',1940],['Plácido',1961],['The Shop Around the Corner',1940],['Batman Returns',1992],['Arthur Christmas',2011],['Tangerine',2015],['Trading Places',1983],['Better Watch Out',2016],['Kiss Kiss Bang Bang',2005],['Gremlins',1984],['Scrooge',1951],['A Christmas Story',1983],['Щедрик',2022],['Anna and the Apocalypse',2017],['A Christmas Tale',2008],['Rare Exports: A Christmas Tale',2010],['Carol',2015],['Пекельна хоругва, або Різдво козацьке',2019],['Tokyo Godfathers',2003],['Hogfather',2006],['Edward Scissorhands',1990],['Happiest Season',2020],['The Muppet Christmas Carol',1992],['The Holdovers',2023],['Die Hard',1988],['The Thin Man',1934],['Памфір',2022],['The Gold Rush',1925],['Holiday',1938],['After the Thin Man',1936],['The Apartment',1960]];
+const titles=[['Miracle on 34th Street',1947],['Carol',2015],['Plácido',1961],['A Christmas Tale',2008],['Batman Returns',1992],['Arthur Christmas',2011],['The Gold Rush',1925],['Hogfather',2006],['Scrooge',1951],['Kiss Kiss Bang Bang',2005],['Gremlins',1984],['Better Watch Out',2016],['A Christmas Story',1983],['Щедрик',2022],['Anna and the Apocalypse',2017],['The Shop Around the Corner',1940],['Rare Exports: A Christmas Tale',2010],['Remember the Night',1940],['Пекельна хоругва, або Різдво козацьке',2019],['Tokyo Godfathers',2003],['Trading Places',1983],['Edward Scissorhands',1990],['Holiday',1938],['The Muppet Christmas Carol',1992],['The Holdovers',2023],['Die Hard',1988],['The Thin Man',1934],['Памфір',2022],['Tangerine',2015],['Happiest Season',2020],['After the Thin Man',1936],['The Apartment',1960]];
 const movieDescriptions=[
   "A department-store Santa insists he is the real Kris Kringle, inspiring a young girl and an unforgettable courtroom case.",
-  "A woman arrested just before Christmas is released into a prosecutor’s custody, leading to an unexpected holiday journey.",
+  "Two women develop a powerful connection in 1950s New York, despite the expectations and restrictions surrounding them.",
   "In a small Spanish town, a businessman’s plan to impress a visiting charity delegation spirals into a sharp holiday satire.",
-  "Two quarrelling coworkers at a Budapest shop unknowingly fall in love through anonymous letters.",
+  "A troubled French family reunites for Christmas, stirring up old resentments, complicated loyalties, and unexpected connections.",
   "Gotham faces the Penguin and Catwoman as Batman navigates a dark, snow-covered Christmas season.",
   "Santa’s well-meaning son Arthur sets out on a frantic mission to deliver one forgotten Christmas present.",
-  "On Christmas Eve in Los Angeles, two transgender friends embark on a chaotic search for answers across the city.",
-  "A wealthy investor and a street hustler swap circumstances after a cruel bet by two powerful businessmen.",
-  "A babysitting job takes a sinister turn when a young boy and his friend have plans of their own.",
+  "Charlie Chaplin’s Little Tramp heads to Alaska during the Gold Rush, encountering hardship, friendship, and romance.",
+  "In a world where holidays have a life of their own, Death steps in when the Hogfather mysteriously disappears.",
+  "A bitter miser encounters three spirits who offer him a chance to change his life on Christmas Eve.",
   "A detective story unfolds in Los Angeles when a petty thief, an actress, and a private investigator become tangled in murder.",
   "A boy’s unusual Christmas gift brings mischievous creatures—and absolute mayhem—to a sleepy town.",
-  "A bitter miser encounters three spirits who offer him a chance to change his life on Christmas Eve.",
+  "A babysitting job takes a sinister turn when a young boy and his friend have plans of their own.",
   "A young boy in 1940s Indiana is determined to get a Red Ryder BB gun for Christmas, despite everyone’s warnings.",
   "As war engulfs their city, Ukrainian, Polish, and Jewish families struggle to protect their children, finding hope and solidarity through the song “Shchedryk”.",
   "As a zombie outbreak hits a Scottish town, a teenager and her friends sing and fight their way toward safety.",
-  "A troubled French family reunites for Christmas, stirring up old resentments, complicated loyalties, and unexpected connections.",
+  "Two quarrelling coworkers at a Budapest shop unknowingly fall in love through anonymous letters.",
   "A Finnish village discovers something frightening buried beneath the ice as Christmas approaches.",
-  "Two women develop a powerful connection in 1950s New York, despite the expectations and restrictions surrounding them.",
+  "A woman arrested just before Christmas is released into a prosecutor’s custody, leading to an unexpected holiday journey.",
   "A resourceful Cossack must outwit the Devil before Christmas in a fantastical adventure drawn from Ukrainian folklore and mythology.",
   "Three unhoused people in Tokyo discover an abandoned baby on Christmas Eve and set off to find her family.",
-  "In a world where holidays have a life of their own, Death steps in when the Hogfather mysteriously disappears.",
+  "A wealthy investor and a street hustler swap circumstances after a cruel bet by two powerful businessmen.",
   "A gentle young man with scissors for hands arrives in suburbia, where his gifts and differences change a community.",
-  "Returning home for Christmas, a woman plans to propose to her girlfriend—until she learns her partner hasn’t come out.",
+  "A free-spirited young man falls for a wealthy woman but refuses to surrender his independence for her family’s expectations.",
   "The Muppets bring humor, music, and heart to Dickens’s tale of Ebenezer Scrooge and his Christmas visitors.",
   "A grumpy teacher, a grieving student, and a school cook spend the winter holidays together at an almost-empty boarding school.",
   "During a Christmas party at a Los Angeles skyscraper, an off-duty detective battles criminals who have seized the building.",
   "A retired detective and his witty wife become caught up in a glamorous murder mystery over the holidays.",
   "Returning to his village near the Ukrainian border, a former smuggler hopes to live honestly, but a family crisis draws him back toward danger amid Malanka festivities.",
-  "Charlie Chaplin’s Little Tramp heads to Alaska during the Gold Rush, encountering hardship, friendship, and romance.",
-  "A free-spirited young man falls for a wealthy woman but refuses to surrender his independence for her family’s expectations.",
+  "On Christmas Eve in Los Angeles, two transgender friends embark on a chaotic search for answers across the city.",
+  "Returning home for Christmas, a woman plans to propose to her girlfriend—until she learns her partner hasn’t come out.",
   "Nick and Nora Charles investigate another murder while navigating witty banter, high society, and New Year festivities.",
   "A lonely office worker lends his apartment to executives seeking affairs, complicating his career and romantic life."
 ];
@@ -134,6 +134,9 @@ async function posterUrl(i){
 }
 let preview=true,posterRequest=0,currentMovieIndex=null;
 function dateFor(i){return i===31?'2027-01-01':`2026-12-${String(i+1).padStart(2,'0')}`}
+const weekdays=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+function weekdayFor(i){const [year,month,day]=dateFor(i).split('-').map(Number);return weekdays[new Date(Date.UTC(year,month-1,day)).getUTCDay()]}
+
 function kyivToday(){
  const parts=new Intl.DateTimeFormat('en-US',{timeZone:'Europe/Kyiv',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
  const get=t=>parts.find(p=>p.type===t).value;
@@ -148,8 +151,8 @@ function render(){
   const b=document.createElement('button');
   b.className='door'+(unlocked(i)?'':' locked')+(passed(i)?' opened':'')+(isPast(i)?' past':'');
   b.style.setProperty('--door-color',doorPalette[i%doorPalette.length]);
-  b.setAttribute('aria-label',(i===31?'January 1':`December ${i+1}`)+(unlocked(i)?`, ${title}`:', locked'));
-  b.innerHTML=`<span class="door-number">${i===31?'01':String(i+1).padStart(2,'0')}</span><span class="door-status">${i===31?'January':'December'}</span>`;
+  b.setAttribute('aria-label',weekdayFor(i)+', '+(i===31?'January 1':`December ${i+1}`)+(unlocked(i)?`, ${title}`:', locked'));
+  b.innerHTML=`<span class="door-number">${i===31?'01':String(i+1).padStart(2,'0')}</span><span class="door-status">${weekdayFor(i)} · ${i===31?'Jan':'Dec'}</span>`;
   b.onclick=()=>{if(!unlocked(i)){alert('This door opens on '+(i===31?'January 1, 2027':`December ${i+1}, 2026`)+' in Kyiv.');return}show(i)};
   grid.appendChild(b);
  });
@@ -158,7 +161,7 @@ function show(i){
  if(!unlocked(i))return;
  currentMovieIndex=i;
  const [title,year]=titles[i];
- $('day').textContent=i===31?'New Year’s Day · January 1':`December ${i+1}`;
+ $('day').textContent=weekdayFor(i)+' · '+(i===31?'New Year’s Day · January 1':`December ${i+1}`);
  $('movie-title').textContent=title;$('year').textContent=year;$('movie-description').textContent=movieDescriptions[i];
  const runtime=$('runtime');runtime.hidden=true;runtime.textContent='';
  posterManifest().then(data=>{
