@@ -24,7 +24,7 @@ FILMS = [
     ("Batman Returns", 1992, "movie"),
     ("Arthur Christmas", 2011, "movie"),
     ("The Gold Rush", 1925, "movie"),
-    ("Hogfather", 2006, "tv"),
+    ("Trading Places", 1983, "movie"),
     ("Scrooge", 1951, "movie"),
     ("Kiss Kiss Bang Bang", 2005, "movie"),
     ("Gremlins", 1984, "movie"),
@@ -37,17 +37,17 @@ FILMS = [
     ("Remember the Night", 1940, "movie"),
     ("Пекельна хоругва, або Різдво козацьке", 2019, "movie"),
     ("Tokyo Godfathers", 2003, "movie"),
-    ("Trading Places", 1983, "movie"),
+    ("Hogfather", 2006, "tv"),
     ("Edward Scissorhands", 1990, "movie"),
     ("Holiday", 1938, "movie"),
     ("The Muppet Christmas Carol", 1992, "movie"),
     ("The Holdovers", 2023, "movie"),
     ("Die Hard", 1988, "movie"),
     ("The Thin Man", 1934, "movie"),
-    ("Памфір", 2022, "movie"),
+    ("After the Thin Man", 1936, "movie"),
     ("Tangerine", 2015, "movie"),
     ("Happiest Season", 2020, "movie"),
-    ("After the Thin Man", 1936, "movie"),
+    ("Памфір", 2022, "movie"),
     ("The Apartment", 1960, "movie"),
 ]
 ALIASES = {16: "Rare Exports"}  # TMDB's shorter title for the 2010 film
@@ -57,11 +57,11 @@ IMDB_IDS = {
     11: "tt4443658",  # Better Watch Out (2016/2017)
     14: "tt6433880", # Anna and the Apocalypse (2017/2018)
     13: "tt8332658",  # Щедрик / Carol of the Bells
-    27: "tt9455468",  # Памфір / Pamfir
+    30: "tt9455468",  # Памфір / Pamfir
     18: "tt10272460", # Пекельна хоругва
 }
 # To choose a specific record, set its TMDB numeric ID here and rerun the action.
-OVERRIDE_IDS = {13: 853079, 27: 850297}  # Verified TMDB entries for Щедрик and Памфір
+OVERRIDE_IDS = {13: 853079, 30: 850297}  # Verified TMDB entries for Щедрик and Памфір
 
 def norm(text):
     text = unicodedata.normalize("NFKD", text)
