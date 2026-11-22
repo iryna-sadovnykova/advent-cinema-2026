@@ -18,13 +18,13 @@ import urllib.request
 
 FILMS = [
     ("Miracle on 34th Street", 1947, "movie"),
-    ("The Man Who Invented Christmas", 2017, "movie"),
+    ("Щедрик", 2022, "movie"),
     ("Plácido", 1961, "movie"),
     ("The Shop Around the Corner", 1940, "movie"),
     ("Batman Returns", 1992, "movie"),
     ("Arthur Christmas", 2011, "movie"),
     ("Tangerine", 2015, "movie"),
-    ("Little Women", 1994, "movie"),
+    ("Памфір", 2022, "movie"),
     ("Better Watch Out", 2016, "movie"),
     ("Kiss Kiss Bang Bang", 2005, "movie"),
     ("Gremlins", 1984, "movie"),
@@ -35,7 +35,7 @@ FILMS = [
     ("A Christmas Tale", 2008, "movie"),
     ("Rare Exports: A Christmas Tale", 2010, "movie"),
     ("Carol", 2015, "movie"),
-    ("A Biltmore Christmas", 2023, "movie"),
+    ("Пекельна хоругва, або Різдво козацьке", 2019, "movie"),
     ("The Muppet Christmas Carol", 1992, "movie"),
     ("Hogfather", 2006, "tv"),
     ("Edward Scissorhands", 1990, "movie"),
@@ -56,9 +56,12 @@ IMDB_IDS = {
     2: "tt0055310",  # Plácido (1961), Luis García Berlanga
     8: "tt4443658",  # Better Watch Out (2016/2017)
     14: "tt6433880", # Anna and the Apocalypse (2017/2018)
+    1: "tt8332658",  # Щедрик / Carol of the Bells
+    7: "tt9455468",  # Памфір / Pamfir
+    18: "tt10272460", # Пекельна хоругва
 }
 # To choose a specific record, set its TMDB numeric ID here and rerun the action.
-OVERRIDE_IDS = {}
+OVERRIDE_IDS = {1: 853079, 7: 850297}  # Verified TMDB entries for Щедрик and Памфір
 
 def norm(text):
     text = unicodedata.normalize("NFKD", text)
