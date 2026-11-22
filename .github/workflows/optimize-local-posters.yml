@@ -1,0 +1,30 @@
+name: Optimize local movie posters
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/optimize-local-posters.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Install Pillow
+        run: python3 -m pip install --user Pillow
+      - name: Optimize posters
+        run: python3 scripts/optimize_local_posters.py
+      - name: Commit optimized images
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add posters/*.webp
+          if ! git diff --cached --quiet; then
+            git commit -m "Optimize Ukrainian movie posters for fast loading"
+            git push
+          fi
