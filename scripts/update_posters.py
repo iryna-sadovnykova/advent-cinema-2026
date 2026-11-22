@@ -181,9 +181,11 @@ def runtime_minutes(item, kind):
     return None
 
 def main():
-    posters = {}
-    records = {}
-    runtimes = {}
+    previous_path = pathlib.Path("posters.json")
+    previous = json.loads(previous_path.read_text()) if previous_path.exists() else {}
+    posters = dict(previous.get("posters", {}))
+    records = dict(previous.get("records", {}))
+    runtimes = dict(previous.get("runtimes", {}))
     missing = []
     for i, (title, year, kind) in enumerate(FILMS):
         try:
