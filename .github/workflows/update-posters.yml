@@ -1,6 +1,9 @@
 name: Curate TMDB posters
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/update-posters.yml'
 
 permissions:
   contents: write
