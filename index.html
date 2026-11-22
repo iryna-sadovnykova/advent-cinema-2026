@@ -72,7 +72,7 @@ h1{font-size:clamp(48px,7.2vw,86px);font-weight:700;letter-spacing:-.065em;line-
 </div>
 </div></div>
 <script>
-const titles=[['Miracle on 34th Street',1947],['Carol',2015],['Plácido',1961],['A Christmas Tale',2008],['Batman Returns',1992],['Arthur Christmas',2011],['The Gold Rush',1925],['Hogfather',2006],['Scrooge',1951],['Kiss Kiss Bang Bang',2005],['Gremlins',1984],['Better Watch Out',2016],['A Christmas Story',1983],['Щедрик',2022],['Anna and the Apocalypse',2017],['The Shop Around the Corner',1940],['Rare Exports: A Christmas Tale',2010],['Remember the Night',1940],['Пекельна хоругва, або Різдво козацьке',2019],['Tokyo Godfathers',2003],['Trading Places',1983],['Edward Scissorhands',1990],['Holiday',1938],['The Muppet Christmas Carol',1992],['The Holdovers',2023],['Die Hard',1988],['The Thin Man',1934],['Памфір',2022],['Tangerine',2015],['Happiest Season',2020],['After the Thin Man',1936],['The Apartment',1960]];
+const titles=[['Miracle on 34th Street',1947],['Carol',2015],['Plácido',1961],['A Christmas Tale',2008],['Batman Returns',1992],['Arthur Christmas',2011],['The Gold Rush',1925],['Trading Places',1983],['Scrooge',1951],['Kiss Kiss Bang Bang',2005],['Gremlins',1984],['Better Watch Out',2016],['A Christmas Story',1983],['Щедрик',2022],['Anna and the Apocalypse',2017],['The Shop Around the Corner',1940],['Rare Exports: A Christmas Tale',2010],['Remember the Night',1940],['Пекельна хоругва, або Різдво козацьке',2019],['Tokyo Godfathers',2003],['Hogfather',2006],['Edward Scissorhands',1990],['Holiday',1938],['The Muppet Christmas Carol',1992],['The Holdovers',2023],['Die Hard',1988],['The Thin Man',1934],['After the Thin Man',1936],['Tangerine',2015],['Happiest Season',2020],['Памфір',2022],['The Apartment',1960]];
 const movieDescriptions=[
   "A department-store Santa insists he is the real Kris Kringle, inspiring a young girl and an unforgettable courtroom case.",
   "Two women develop a powerful connection in 1950s New York, despite the expectations and restrictions surrounding them.",
@@ -81,7 +81,7 @@ const movieDescriptions=[
   "Gotham faces the Penguin and Catwoman as Batman navigates a dark, snow-covered Christmas season.",
   "Santa’s well-meaning son Arthur sets out on a frantic mission to deliver one forgotten Christmas present.",
   "Charlie Chaplin’s Little Tramp heads to Alaska during the Gold Rush, encountering hardship, friendship, and romance.",
-  "In a world where holidays have a life of their own, Death steps in when the Hogfather mysteriously disappears.",
+  "A wealthy investor and a street hustler swap circumstances after a cruel bet by two powerful businessmen.",
   "A bitter miser encounters three spirits who offer him a chance to change his life on Christmas Eve.",
   "A detective story unfolds in Los Angeles when a petty thief, an actress, and a private investigator become tangled in murder.",
   "A boy’s unusual Christmas gift brings mischievous creatures—and absolute mayhem—to a sleepy town.",
@@ -94,17 +94,17 @@ const movieDescriptions=[
   "A woman arrested just before Christmas is released into a prosecutor’s custody, leading to an unexpected holiday journey.",
   "A resourceful Cossack must outwit the Devil before Christmas in a fantastical adventure drawn from Ukrainian folklore and mythology.",
   "Three unhoused people in Tokyo discover an abandoned baby on Christmas Eve and set off to find her family.",
-  "A wealthy investor and a street hustler swap circumstances after a cruel bet by two powerful businessmen.",
+  "In a world where holidays have a life of their own, Death steps in when the Hogfather mysteriously disappears.",
   "A gentle young man with scissors for hands arrives in suburbia, where his gifts and differences change a community.",
   "A free-spirited young man falls for a wealthy woman but refuses to surrender his independence for her family’s expectations.",
   "The Muppets bring humor, music, and heart to Dickens’s tale of Ebenezer Scrooge and his Christmas visitors.",
   "A grumpy teacher, a grieving student, and a school cook spend the winter holidays together at an almost-empty boarding school.",
   "During a Christmas party at a Los Angeles skyscraper, an off-duty detective battles criminals who have seized the building.",
   "A retired detective and his witty wife become caught up in a glamorous murder mystery over the holidays.",
-  "Returning to his village near the Ukrainian border, a former smuggler hopes to live honestly, but a family crisis draws him back toward danger amid Malanka festivities.",
+  "Nick and Nora Charles investigate another murder while navigating witty banter, high society, and New Year festivities.",
   "On Christmas Eve in Los Angeles, two transgender friends embark on a chaotic search for answers across the city.",
   "Returning home for Christmas, a woman plans to propose to her girlfriend—until she learns her partner hasn’t come out.",
-  "Nick and Nora Charles investigate another murder while navigating witty banter, high society, and New Year festivities.",
+  "Returning to his village near the Ukrainian border, a former smuggler hopes to live honestly, but a family crisis draws him back toward danger amid Malanka festivities.",
   "A lonely office worker lends his apartment to executives seeking affairs, complicating his career and romantic life."
 ];
 // Red, green, gold repeating palette used by every calendar door.
@@ -122,7 +122,7 @@ function posterManifest(){
 }
 const localPosters={
  13:'./posters/shchedryk.jpeg',
- 27:'./posters/pamfir.jpeg',
+ 30:'./posters/pamfir.jpeg',
  18:'./posters/pekelna-khoruhva.jpeg'
 };
 async function posterUrl(i){
