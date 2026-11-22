@@ -45,7 +45,9 @@ h1{font-size:clamp(48px,7.2vw,86px);font-weight:700;letter-spacing:-.065em;line-
 .details{padding:57px 30px 30px}
 .day{font-size:11px;color:var(--red);font-weight:700;text-transform:uppercase;letter-spacing:.13em}
 .details h2{font-size:clamp(26px,3.5vw,42px);line-height:1.1;letter-spacing:-.05em;margin:14px 0}
-.year{font-size:14px;color:var(--muted)}
+.movie-meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+.runtime:not([hidden])::before{content:"·";margin-right:10px}
+.runtime[hidden]{display:none}
 .details p{font-size:14px;line-height:1.65;margin-top:28px}.synopsis{max-width:40ch}
 .hint{margin-top:28px;font-size:12px;line-height:1.6;color:var(--muted)}
 .close{position:absolute;top:12px;right:12px;z-index:5;border:none;background:var(--bg);color:var(--ink);width:36px;height:36px;border-radius:6px;font-size:24px;line-height:1;cursor:pointer}
@@ -65,7 +67,7 @@ h1{font-size:clamp(48px,7.2vw,86px);font-weight:700;letter-spacing:-.065em;line-
 <div class="panel">
 <button class="close" id="close" aria-label="Close">×</button>
 <div class="poster" id="poster"><div class="poster-label" id="poster-label"></div></div>
-<div class="details"><div class="day" id="day"></div><h2 id="movie-title"></h2><div class="year" id="year"></div>
+<div class="details"><div class="day" id="day"></div><h2 id="movie-title"></h2><div class="movie-meta"><span class="year" id="year"></span><span class="runtime" id="runtime" hidden></span></div>
 <p class="synopsis" id="movie-description"></p>
 </div>
 </div></div>
@@ -152,6 +154,15 @@ function show(i){
  const [title,year]=titles[i];
  $('day').textContent=i===31?'New Year’s Day · January 1':`December ${i+1}`;
  $('movie-title').textContent=title;$('year').textContent=year;$('movie-description').textContent=movieDescriptions[i];
+ const runtime=$('runtime');runtime.hidden=true;runtime.textContent='';
+ posterManifest().then(data=>{
+  if(currentMovieIndex!==i || !$('modal').classList.contains('show'))return;
+  const minutes=Number(data.runtimes?.[i]);
+  if(Number.isInteger(minutes)&&minutes>0){
+   runtime.textContent=minutes>=60?`${Math.floor(minutes/60)}h ${String(minutes%60).padStart(2,'0')}m`:`${minutes} min`;
+   runtime.hidden=false;
+  }
+ });
  const p=$('poster');p.querySelectorAll('img').forEach(el=>el.remove());
  $('poster-label').textContent=title;$('poster-label').style.display='block';p.classList.add('loading');
  $('modal').classList.add('show');$('close').focus();
