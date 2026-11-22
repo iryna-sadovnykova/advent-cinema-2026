@@ -149,9 +149,38 @@ def poster_for(item, kind):
     ), reverse=True)
     return options[0].get("file_path") if options else None
 
+def runtime_minutes(item, kind):
+    """Fetch a title's runtime from TMDB details, not search summaries."""
+    details = get_api(f"{kind}/{item['id']}")
+    if kind == "movie":
+        value = details.get("runtime")
+        return value if isinstance(value, int) and value > 0 else None
+
+    # Miniseries: show its combined duration, rather than one episode.
+    total = 0
+    counted = 0
+    for season in details.get("seasons", []):
+        number = season.get("season_number")
+        if not isinstance(number, int) or number < 1:
+            continue
+        season_data = get_api(f"tv/{item['id']}/season/{number}")
+        for episode in season_data.get("episodes", []):
+            minutes = episode.get("runtime")
+            if isinstance(minutes, int) and minutes > 0:
+                total += minutes
+                counted += 1
+    if counted:
+        return total
+    typical = details.get("episode_run_time") or []
+    episode_count = details.get("number_of_episodes")
+    if typical and isinstance(typical[0], int) and typical[0] > 0 and isinstance(episode_count, int) and episode_count > 0:
+        return typical[0] * episode_count
+    return None
+
 def main():
     posters = {}
     records = {}
+    runtimes = {}
     missing = []
     for i, (title, year, kind) in enumerate(FILMS):
         try:
@@ -160,17 +189,27 @@ def main():
             print(f"Error retrieving {title} ({year}): {exc}", file=sys.stderr)
             missing.append(f"{i+1:02d}. {title} ({year}) — API error")
             continue
+        if not item:
+            missing.append(f"{i+1:02d}. {title} ({year}) — no verified TMDB match")
+            continue
+        records[str(i)] = {"title": title, "year": year, "tmdb_id": item["id"], "media_type": kind}
+        try:
+            duration = runtime_minutes(item, kind)
+            if duration:
+                runtimes[str(i)] = duration
+        except Exception as exc:
+            print(f"Could not retrieve runtime for {title}: {exc}", file=sys.stderr)
+
         path = poster_for(item, kind)
         if not (isinstance(path, str) and re.fullmatch(r"/[A-Za-z0-9_.-]+\.(jpg|png|webp)", path)):
             missing.append(f"{i+1:02d}. {title} ({year}) — no verified poster match")
             continue
         posters[str(i)] = path
-        records[str(i)] = {"title": title, "year": year, "tmdb_id": item["id"], "media_type": kind}
-        print(f"{i+1:02d}. {title} ({year}) → TMDB {kind} {item['id']} → {path}")
+        print(f"{i+1:02d}. {title} ({year}) → TMDB {kind} {item['id']} → {path} ({runtimes.get(str(i), 'unknown')} min)")
     target = pathlib.Path("posters.json")
-    target.write_text(json.dumps({"source": "TMDB", "posters": posters, "records": records}, ensure_ascii=False, indent=2) + "\n")
+    target.write_text(json.dumps({"source": "TMDB", "posters": posters, "runtimes": runtimes, "records": records}, ensure_ascii=False, indent=2) + "\n")
     report = f"### TMDB posters: {len(posters)}/32 selected\n\n"
-    report += "The website uses static poster paths from this generated file; no browser API key.\n\n"
+    report += f"Runtimes collected: {len(runtimes)}/32. The website uses static TMDB data; no browser API key.\\n\\n"
     if missing:
         report += "**Needs review**\n\n" + "\n".join(f"- {x}" for x in missing) + "\n"
     else:
