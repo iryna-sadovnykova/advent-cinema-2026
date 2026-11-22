@@ -18,33 +18,33 @@ import urllib.request
 
 FILMS = [
     ("Miracle on 34th Street", 1947, "movie"),
-    ("Щедрик", 2022, "movie"),
+    ("Remember the Night", 1940, "movie"),
     ("Plácido", 1961, "movie"),
     ("The Shop Around the Corner", 1940, "movie"),
     ("Batman Returns", 1992, "movie"),
     ("Arthur Christmas", 2011, "movie"),
     ("Tangerine", 2015, "movie"),
-    ("Памфір", 2022, "movie"),
+    ("Trading Places", 1983, "movie"),
     ("Better Watch Out", 2016, "movie"),
     ("Kiss Kiss Bang Bang", 2005, "movie"),
     ("Gremlins", 1984, "movie"),
     ("Scrooge", 1951, "movie"),
     ("A Christmas Story", 1983, "movie"),
-    ("Remember the Night", 1940, "movie"),
+    ("Щедрик", 2022, "movie"),
     ("Anna and the Apocalypse", 2017, "movie"),
     ("A Christmas Tale", 2008, "movie"),
     ("Rare Exports: A Christmas Tale", 2010, "movie"),
     ("Carol", 2015, "movie"),
     ("Пекельна хоругва, або Різдво козацьке", 2019, "movie"),
-    ("The Muppet Christmas Carol", 1992, "movie"),
+    ("Tokyo Godfathers", 2003, "movie"),
     ("Hogfather", 2006, "tv"),
     ("Edward Scissorhands", 1990, "movie"),
     ("Happiest Season", 2020, "movie"),
-    ("Tokyo Godfathers", 2003, "movie"),
+    ("The Muppet Christmas Carol", 1992, "movie"),
     ("The Holdovers", 2023, "movie"),
     ("Die Hard", 1988, "movie"),
     ("The Thin Man", 1934, "movie"),
-    ("Trading Places", 1983, "movie"),
+    ("Памфір", 2022, "movie"),
     ("The Gold Rush", 1925, "movie"),
     ("Holiday", 1938, "movie"),
     ("After the Thin Man", 1936, "movie"),
@@ -56,12 +56,12 @@ IMDB_IDS = {
     2: "tt0055310",  # Plácido (1961), Luis García Berlanga
     8: "tt4443658",  # Better Watch Out (2016/2017)
     14: "tt6433880", # Anna and the Apocalypse (2017/2018)
-    1: "tt8332658",  # Щедрик / Carol of the Bells
-    7: "tt9455468",  # Памфір / Pamfir
+    13: "tt8332658",  # Щедрик / Carol of the Bells
+    27: "tt9455468",  # Памфір / Pamfir
     18: "tt10272460", # Пекельна хоругва
 }
 # To choose a specific record, set its TMDB numeric ID here and rerun the action.
-OVERRIDE_IDS = {1: 853079, 7: 850297}  # Verified TMDB entries for Щедрик and Памфір
+OVERRIDE_IDS = {13: 853079, 27: 850297}  # Verified TMDB entries for Щедрик and Памфір
 
 def norm(text):
     text = unicodedata.normalize("NFKD", text)
