@@ -120,7 +120,13 @@ function posterManifest(){
  }
  return posterManifestPromise;
 }
+const localPosters={
+ 1:'./posters/shchedryk.jpeg',
+ 7:'./posters/pamfir.jpeg',
+ 18:'./posters/pekelna-khoruhva.jpeg'
+};
 async function posterUrl(i){
+ if(localPosters[i])return localPosters[i];
  const data=await posterManifest();
  const path=data.posters?.[i];
  if(typeof path!=='string'||!/^\/[a-zA-Z0-9_.-]+\.(jpg|jpeg|png|webp)$/.test(path))return null;
