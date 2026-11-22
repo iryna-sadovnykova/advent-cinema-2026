@@ -7,7 +7,7 @@ A 32-day Christmas-season film calendar, December 1, 2026 through January 1, 202
 - All 32 doors previewable by default
 - Past dates turn gray automatically in the Europe/Kyiv timezone
 - Modern, flat red / green / deep-gold layout
-- 2:3 film poster frame (no cropping)
+- Film reveal cards show a TMDB poster, synopsis, release year, and runtime (after the poster updater is rerun)
 - Static TMDB poster paths; no browser-facing API token or Wikipedia search
 
 ## One-time TMDB poster setup
